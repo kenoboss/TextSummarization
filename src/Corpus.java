@@ -2,6 +2,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 
+ * @author Kenoboss
+ * @version 1.0.0
+ * This class contains corpus function for the project TextSummarization
+ *
+ */
 public class Corpus {
 	
 	List < List < String > > cLines;
@@ -36,7 +43,7 @@ public class Corpus {
 		ArrayList<Integer> errorList = new ArrayList<>();
         for(List<String> line: cLines) {
         	lineCounter++;
-        	if (line.size() == 6) {
+        	try {
         		HashMap<String, String> tmp = new HashMap<>();
             	tmp.put("author", line.get(0));
             	tmp.put("date", line.get(1));
@@ -46,30 +53,16 @@ public class Corpus {
             	tmp.put("ctext", line.get(5));
         		result.add(tmp);
         	}
-        	else {
+        	catch (Exception e) {
         		errorList.add(lineCounter);
         	}
+
         }
         if (errorList.size() > 0) {
-        	for (int entry : errorList) {
-        		System.out.println(entry);
-        	}
         	double errorRate = (double)errorList.size() / cLines.size();
-        	System.out.println(errorRate);
         }
 		
 		return result;
-	}
-	
-	
-	public static void main(String[] args) {
-		Corpus corpus = new Corpus();
-		List<HashMap<String, String> > corp = corpus.createCorpus();
-		for (HashMap<String, String> entry: corp) {
-			System.out.println(entry);
-		}
-
-		
 	}
 
 }

@@ -124,8 +124,8 @@ public class Helper {
         String line = "";
         try (BufferedReader br = new BufferedReader(new FileReader(name))) {
             while ((line = br.readLine()) != null) {
-            	System.out.println(line);
-                String[] columns = line.split(seperator);
+//            	System.out.println(line);
+                String[] columns = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
                 if (toDelete != null) {
                 	columns = clearArrayString(columns, toDelete);
                 }
