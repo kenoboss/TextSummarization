@@ -1,7 +1,5 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -11,11 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Scanner;
 
 /**
  * 
@@ -25,7 +19,11 @@ import java.util.Scanner;
  *
  */
 public class Helper {
-
+	
+	/** 
+	 * @param name
+	 * @return byte[]
+	 */
 	public static byte[] readSmallFileBytes(String name) {
 		try {
 			Path path = FileSystems.getDefault().getPath(".", name);
@@ -34,7 +32,13 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 		return null;
 	}
-
+	
+	/**
+	 * This method reads a filename or filepath and returns a list of strings
+	 * with the content of the file
+	 * @param name
+	 * @return List<String>
+	 */
 	public static List<String> readSmallFileLines(String name) {
 		try {
 			return Files.readAllLines(
@@ -44,7 +48,13 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 		return null;
 	}
-
+	
+	/**
+	 * This method reads a filename or filepath and returns a list of strings
+	 * with the content of the file
+	 * @param name
+	 * @return List<String>
+	 */
 	public static List<String> readLargeFileLines(String name) {
 		try ( BufferedReader nbr = 
 				Files.newBufferedReader(
@@ -62,7 +72,13 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 		return null;  
 	}
-
+	
+	/**
+	 * This method takes a filename or filepath and string, which has to write
+	 * to the file
+	 * @param name
+	 * @param content
+	 */
 	public static void writeFileBytes(String name, String content) {
 		try {
 			Files.write(
@@ -72,7 +88,13 @@ public class Helper {
 		}
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 	}
-
+	
+	/**
+	 * This method takes a filename or filepath and a list of string, which has to write
+	 * to the file
+	 * @param name
+	 * @param content
+	 */
 	public static void writeLargeFileLines(String name, List<String> lines) {
 		try ( BufferedWriter nbw = 
 				Files.newBufferedWriter(
@@ -88,14 +110,25 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 	}
 
-
+	/**
+	 * This method takes a filename or filepath and a string as separator and 
+	 * an optional String to delete in a line as arguments. The method 
+	 * returns a list of list of string as row and columns of a csv file.
+	 * @param name
+	 * @param seperator
+	 * @param toDelete
+	 * @return List<List<String>> 
+	 */
 	public List<List<String>> readCSVFile (String name, String seperator, String toDelete) {
 		List<List<String>> lines = new ArrayList<>();
         String line = "";
         try (BufferedReader br = new BufferedReader(new FileReader(name))) {
             while ((line = br.readLine()) != null) {
+            	System.out.println(line);
                 String[] columns = line.split(seperator);
-                columns = clearArrayString(columns, toDelete);
+                if (toDelete != null) {
+                	columns = clearArrayString(columns, toDelete);
+                }
                 lines.add(Arrays.asList(columns));
             }
         } catch (IOException e) {
@@ -104,6 +137,12 @@ public class Helper {
         return lines;
 	}
 	
+	/**
+	 * This method clears a string from another given string
+	 * @param input
+	 * @param toDelete
+	 * @return String
+	 */
 	public String clearString (String input, String toDelete) {
 		String result = input.trim();
 		result = result.replace(toDelete, "");
@@ -111,6 +150,12 @@ public class Helper {
 		return result;
 	}
 	
+	/**
+	 * This method clears a array of strings from a given string
+	 * @param input
+	 * @param toDelete
+	 * @return String []
+	 */
 	public String [] clearArrayString (String [] input, String toDelete) {
 		String [] result = new String [input.length];
 		for (int i = 0; i < result.length; i++) {
