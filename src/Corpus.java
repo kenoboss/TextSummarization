@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.sound.sampled.Line;
+
 /**
  * 
  * @author Kenoboss
@@ -29,8 +31,8 @@ public class Corpus {
 	public List < List < String > > readIn () {
 		Helper helper = new Helper();
 		String s = System.getProperty("user.dir");
-		String path = s+"/data/news_summary.csv";
-		List < List < String > > lines = helper.readCSVFile(path, ",", null);
+		String path = s+"/data/summary_news_clear.csv";
+		List < List < String > > lines = helper.readCSVFile(path);
 		
 		return lines;
 	}
@@ -40,26 +42,19 @@ public class Corpus {
 		Corpus corpus = new Corpus();
 		List < List < String > > cLines = corpus.readIn();
 		int lineCounter = 0;
-		ArrayList<Integer> errorList = new ArrayList<>();
         for(List<String> line: cLines) {
-        	lineCounter++;
-        	try {
+        	if (lineCounter > 0) {
         		HashMap<String, String> tmp = new HashMap<>();
-            	tmp.put("author", line.get(0));
-            	tmp.put("date", line.get(1));
-            	tmp.put("headlines", line.get(2));
-            	tmp.put("read_more", line.get(3));
-            	tmp.put("text", line.get(4));
-            	tmp.put("ctext", line.get(5));
-        		result.add(tmp);
+    	    	tmp.put("author", line.get(0));
+    	    	tmp.put("date", line.get(1));
+    	    	tmp.put("headlines", line.get(2));
+    	    	tmp.put("url", line.get(3));
+    	    	tmp.put("summary", line.get(4));
+    	    	tmp.put("text", line.get(5));
+    			result.add(tmp);
+    			System.out.println(tmp.get("author"));
         	}
-        	catch (Exception e) {
-        		errorList.add(lineCounter);
-        	}
-
-        }
-        if (errorList.size() > 0) {
-        	double errorRate = (double)errorList.size() / cLines.size();
+			lineCounter++;
         }
 		
 		return result;

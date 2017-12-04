@@ -115,26 +115,37 @@ public class Helper {
 	 * an optional String to delete in a line as arguments. The method 
 	 * returns a list of list of string as row and columns of a csv file.
 	 * @param name
-	 * @param seperator
-	 * @param toDelete
 	 * @return List<List<String>> 
 	 */
-	public List<List<String>> readCSVFile (String name, String seperator, String toDelete) {
+	public List<List<String>> readCSVFile (String name) {
 		List<List<String>> lines = new ArrayList<>();
         String line = "";
         try (BufferedReader br = new BufferedReader(new FileReader(name))) {
             while ((line = br.readLine()) != null) {
-//            	System.out.println(line);
-                String[] columns = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
-                if (toDelete != null) {
-                	columns = clearArrayString(columns, toDelete);
-                }
+                String[] columns = line.split(";(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                columns = clearLineFromTextQuotes(columns);
                 lines.add(Arrays.asList(columns));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return lines;
+	}
+	
+	
+	/**
+	 * This method takes a array of strings. In each string the textquotecharacter '"' 
+	 * will be replaced through an empty string. 
+	 * @param line
+	 * @return String [] 
+	 */
+	public String [] clearLineFromTextQuotes (String [] line) {
+		String [] result = new String [line.length];
+		for (int i = 0; i < line.length; i++) {
+			result[i] = line[i].replace("\"", "");
+		}
+		
+		return result;
 	}
 	
 	/**
