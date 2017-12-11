@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.sound.sampled.Line;
 
+import edu.stanford.nlp.trees.Tree;
+
 /**
  * 
  * @author Kenoboss
@@ -13,22 +15,23 @@ import javax.sound.sampled.Line;
  */
 public class Corpus {
 	
-	List < List < String > > cLines;
+	List<Entry> entries;
 	
-	public List<List<String>> getcLines() {
-		return cLines;
+
+	public List<Entry> getEntries() {
+		return entries;
 	}
 
-
-	public void setcLines(List<List<String>> cLines) {
-		this.cLines = cLines;
+	public void setEntries(List<Entry> entries) {
+		this.entries = entries;
 	}
-	
+
 	public Corpus () {
-		cLines = this.readIn();
+		List<Entry> entries = this.createCorpus();
+		this.setEntries(entries);
 	}
 
-	public List < List < String > > readIn () {
+	public static List < List < String > > readIn () {
 		Helper helper = new Helper();
 		String s = System.getProperty("user.dir");
 		String path = s+"/data/summary_news_clear.csv";
@@ -37,27 +40,38 @@ public class Corpus {
 		return lines;
 	}
 	
-	public List<HashMap<String, String> > createCorpus(){
-		List<HashMap<String, String> > result = new ArrayList<>();
-		Corpus corpus = new Corpus();
-		List < List < String > > cLines = corpus.readIn();
+	public List<Entry> createCorpus(){
+		
+		StanfordNLP snlp = new StanfordNLP();
+		List < List < String > > cLines = readIn();
+		List<Entry> entries = new ArrayList<>();
 		int lineCounter = 0;
+		int i = 0;
         for(List<String> line: cLines) {
-        	if (lineCounter > 0) {
-        		HashMap<String, String> tmp = new HashMap<>();
-    	    	tmp.put("author", line.get(0));
-    	    	tmp.put("date", line.get(1));
-    	    	tmp.put("headlines", line.get(2));
-    	    	tmp.put("url", line.get(3));
-    	    	tmp.put("summary", line.get(4));
-    	    	tmp.put("text", line.get(5));
-    			result.add(tmp);
-    			System.out.println(tmp.get("author"));
+        	if (lineCounter > 0 && lineCounter < 10) {
+        		Entry entry = new Entry();
+        		entry.setId(lineCounter);
+        		entry.setAuthor(line.get(0));
+        		entry.setDate(line.get(1));
+        		entry.setHeadlines(line.get(2));
+        		entry.setUrl(line.get(3));
+        		entry.setSummary(line.get(4));
+        		entry.setText(line.get(5));
+        		
+        		List<Tree> parseTree = new ArrayList<>();
+        		parseTree = snlp.stanfordPipeLine(line.get(4));
+        		entry.setParsingTreesSummary(parseTree);
+//        		
+//        		parseTree = snlp.stanfordPipeLine(line.get(5));
+//        		entry.setParsingTreesText(parseTree);
+        		
+        		
+        		entries.add(entry);
+        		
+        		i++;
         	}
 			lineCounter++;
         }
-		
-		return result;
+		return entries;
 	}
-
 }

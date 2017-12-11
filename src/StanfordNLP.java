@@ -2,6 +2,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -30,35 +31,47 @@ import edu.stanford.nlp.util.CoreMap;
  * This class contains all functions for the handling with the Stanford NLP Software
  */
 public class StanfordNLP {
+
+	public StanfordNLP () {
+		
+	}
+
 	
-	public static void stanfordPipeLine () {
-		 // creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
+	public List<Tree> stanfordPipeLine (String inputText) {
+		
+		List<Tree> result = new ArrayList<>();
+		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
 	    Properties props = new Properties();
-	    props.put("annotators", "tokenize, ssplit, pos, lemma, ner, parse, dcoref");
+	    props.put("annotators", "tokenize, ssplit, parse");
 	    StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-	    Annotation document = new Annotation("This is a nice test.");
+	    
+	    String text = inputText;
+
+	    // create an empty Annotation just with the given text
+	    Annotation document = new Annotation(text);
+
+	    // run all Annotators on this text
 	    pipeline.annotate(document);
 
+	    // these are all the sentences in this document
+	    // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
 	    List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-
-	    for(CoreMap sentence: sentences) {
-	      for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
-	        String word = token.get(TextAnnotation.class);
-	        String pos = token.get(PartOfSpeechAnnotation.class);
-	        String ne = token.get(NamedEntityTagAnnotation.class);
-	        
-	        System.out.println("word: " + word + " pos: " + pos + " ne:" + ne);
-	      }
-
-	    }
-
 	    
+	    for(CoreMap sentence: sentences) {
+	      // this is the parsetree of the current sentence
+	      Tree tree = sentence.get(TreeAnnotation.class); 
+	      result.add(tree);
+	    }
+	    return result;
 	}
 	
-
 	
-	public static void main(String [] args) {
-		stanfordPipeLine();
+	public static void main (String [] args) {
+		StanfordNLP nlp = new StanfordNLP();
+		List<Tree> parse = nlp.stanfordPipeLine("This is a nice test and another test. I guess i don't like pizza.");
+		for (Tree tree: parse) {
+			System.out.println(tree);
+		}
 	}
 }
 
