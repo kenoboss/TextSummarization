@@ -61,9 +61,9 @@ public class Corpus {
         		List<Tree> parseTree = new ArrayList<>();
         		parseTree = snlp.stanfordPipeLine(line.get(4));
         		entry.setParsingTreesSummary(parseTree);
-//        		
-//        		parseTree = snlp.stanfordPipeLine(line.get(5));
-//        		entry.setParsingTreesText(parseTree);
+
+        		parseTree = snlp.stanfordPipeLine(line.get(5));
+        		entry.setParsingTreesText(parseTree);
         		
         		
         		entries.add(entry);
