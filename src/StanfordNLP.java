@@ -39,7 +39,7 @@ public class StanfordNLP {
 	
 	public List<Tree> stanfordPipeLine (String inputText) {
 		
-		List<Tree> result = new ArrayList<>();
+		List<Tree> result = new ArrayList<Tree>();
 		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
 	    Properties props = new Properties();
 	    props.put("annotators", "tokenize, ssplit, parse");

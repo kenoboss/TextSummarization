@@ -61,7 +61,7 @@ public class Helper {
 						FileSystems.getDefault().getPath(name), 
 						Charset.defaultCharset() )
 				){
-			List<String> lines = new ArrayList<>();
+			List<String> lines = new ArrayList<String>();
 			while (true){
 				String line = nbr.readLine();
 				if ( line == null ) return lines;
@@ -92,8 +92,7 @@ public class Helper {
 	/**
 	 * This method takes a filename or filepath and a list of string, which has to write
 	 * to the file
-	 * @param name
-	 * @param content
+	 * @param name, content
 	 */
 	public static void writeLargeFileLines(String name, List<String> lines) {
 		try ( BufferedWriter nbw = 
