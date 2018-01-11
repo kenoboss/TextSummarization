@@ -93,8 +93,7 @@ public class Entry {
 		sb.append(this.getText()+", ");
 		
 		
-		String result = sb.toString();
-		return result;
+		return sb.toString();
 	}
 	
 	public Entry() {

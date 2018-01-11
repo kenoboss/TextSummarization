@@ -26,8 +26,8 @@ public class Corpus {
 		this.entries = entries;
 	}
 
-	public Corpus () {
-		List<Entry> entries = this.createCorpus();
+	public Corpus (boolean test) {
+		List<Entry> entries = this.createCorpus(test);
 		this.setEntries(entries);
 	}
 
@@ -40,15 +40,20 @@ public class Corpus {
 		return lines;
 	}
 	
-	public List<Entry> createCorpus(){
-		
+	public List<Entry> createCorpus(boolean test){
+
 		StanfordNLP snlp = new StanfordNLP();
 		List < List < String > > cLines = readIn();
-		List<Entry> entries = new ArrayList<>();
+		List<Entry> entries = new ArrayList<Entry>();
 		int lineCounter = 0;
 		int i = 0;
+		int maxSize = 0;
+
+		if (test == false){maxSize = cLines.size()-1;}
+		else{maxSize = 10;}
+
         for(List<String> line: cLines) {
-        	if (lineCounter > 0 && lineCounter < 10) {
+        	if (lineCounter > 0 && lineCounter <= maxSize) {
         		Entry entry = new Entry();
         		entry.setId(lineCounter);
         		entry.setAuthor(line.get(0));
@@ -58,12 +63,12 @@ public class Corpus {
         		entry.setSummary(line.get(4));
         		entry.setText(line.get(5));
         		
-        		List<Tree> parseTree = new ArrayList<>();
-        		parseTree = snlp.stanfordPipeLine(line.get(4));
-        		entry.setParsingTreesSummary(parseTree);
-
-        		parseTree = snlp.stanfordPipeLine(line.get(5));
-        		entry.setParsingTreesText(parseTree);
+//        		List<Tree> parseTree = new ArrayList<>();
+//        		parseTree = snlp.stanfordPipeLine(line.get(4));
+//        		entry.setParsingTreesSummary(parseTree);
+//
+//        		parseTree = snlp.stanfordPipeLine(line.get(5));
+//        		entry.setParsingTreesText(parseTree);
         		
         		
         		entries.add(entry);
