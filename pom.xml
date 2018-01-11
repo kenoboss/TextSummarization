@@ -17,7 +17,7 @@
         <logback.version>1.1.7</logback.version>
         <jfreechart.version>1.0.13</jfreechart.version>
         <jcommon.version>1.0.23</jcommon.version>
-        <nd4j.backend>nd4j-api</nd4j.backend>
+        <nd4j.backend>nd4j-backends</nd4j.backend>
         <nd4j.version>0.9.1</nd4j.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -74,9 +74,17 @@
         <!-- ND4J backend. You need one in every DL4J project. Normally define artifactId as either "nd4j-native-platform" or "nd4j-cuda-7.5-platform" -->
         <dependency>
             <groupId>org.nd4j</groupId>
-            <artifactId>${nd4j.backend}</artifactId>
+            <artifactId>nd4j-backends</artifactId>
+            <version>0.9.1</version>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.nd4j</groupId>
+            <artifactId>nd4j-native</artifactId>
             <version>${nd4j.version}</version>
         </dependency>
+
 
         <!-- Core DL4J functionality -->
         <dependency>
