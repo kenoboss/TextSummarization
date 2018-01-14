@@ -49,12 +49,10 @@ public class WordFrequencies {
         Set set2 = freqList.entrySet();
         Iterator iterator2 = set2.iterator();
         int counter = 0;
-        while(iterator2.hasNext()) {
-            if (counter < 10){
+        while(iterator2.hasNext() && counter < 10) {
                 Map.Entry me2 = (Map.Entry)iterator2.next();
                 String tmp = me2.getKey().toString();
                 result.add(tmp);
-            }
             counter++;
         }
 
@@ -62,12 +60,27 @@ public class WordFrequencies {
     }
 
 
+    public List<String> getList (String inputText){
+        List<String> result = new ArrayList<>();
+        HashMap<String, Integer> freqList = this.createFrequencyList(inputText);
+        Set set2 = freqList.entrySet();
+        Iterator iterator2 = set2.iterator();
+        while(iterator2.hasNext()) {
+            Map.Entry me2 = (Map.Entry)iterator2.next();
+            String tmp = me2.getKey().toString();
+            result.add(tmp);
+        }
+
+        return result;
+    }
+
+
     private static HashMap sortByValues(HashMap map) {
-        List list = new LinkedList(map.entrySet());
+        List list = new ArrayList(map.entrySet());
         Collections.sort(list, new Comparator() {
             public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
+                return ((Comparable) ((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
             }
         });
         HashMap sortedHashMap = new LinkedHashMap();

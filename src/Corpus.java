@@ -63,12 +63,10 @@ public class Corpus {
         		entry.setSummary(line.get(4));
         		entry.setText(line.get(5));
         		
-//        		List<Tree> parseTree = new ArrayList<>();
-//        		parseTree = snlp.stanfordPipeLine(line.get(4));
-//        		entry.setParsingTreesSummary(parseTree);
-//
-//        		parseTree = snlp.stanfordPipeLine(line.get(5));
-//        		entry.setParsingTreesText(parseTree);
+        		List<String> wordFreqs = new ArrayList<>();
+        		WordFrequencies wf = new WordFrequencies();
+        		entry.setContentWordsText(wf.getTop10(entry.getText()));
+        		entry.setContentWordsHeadline(wf.getList(entry.getHeadlines()));
         		
         		
         		entries.add(entry);

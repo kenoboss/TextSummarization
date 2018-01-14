@@ -23,9 +23,9 @@ public class Entry {
 	String headlines;
 	String summary;
 	String text;
-	
-	List<Tree> parsingTreesSummary;
-	List<Tree> parsingTreesText;
+
+	List<String> contentWordsText;
+	List<String> contentWordsHeadline;
 	
 	public int getId() {
 		return id;
@@ -69,18 +69,13 @@ public class Entry {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public List<Tree> getParsingTreesSummary() {
-		return parsingTreesSummary;
-	}
-	public void setParsingTreesSummary(List<Tree> parsingTreesSummary) {
-		this.parsingTreesSummary = parsingTreesSummary;
-	}
-	public List<Tree> getParsingTreesText() {
-		return parsingTreesText;
-	}
-	public void setParsingTreesText(List<Tree> parsingTreesText) {
-		this.parsingTreesText = parsingTreesText;
-	}
+
+	public List<String> getContentWordsText() { return contentWordsText; }
+	public void setContentWordsText(List<String> contentWordsText) { this.contentWordsText = contentWordsText; }
+	public List<String> getContentWordsHeadline() { return contentWordsHeadline; }
+	public void setContentWordsHeadline(List<String> contentWordsHeadline) { this.contentWordsHeadline = contentWordsHeadline; }
+
+
 	
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
