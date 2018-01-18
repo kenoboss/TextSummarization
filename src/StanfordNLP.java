@@ -104,8 +104,8 @@ public class StanfordNLP {
 		}
 		return result;
 	}
-	
-	
+
+
 	public static void main (String [] args) {
 		StanfordNLP nlp = new StanfordNLP();
 		List<String> parse = nlp.stanfordLemmatizer("This is a nice test and another test. I guess i don't like pizza.");
