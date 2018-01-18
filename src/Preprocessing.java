@@ -4,7 +4,7 @@ import java.util.List;
 public class Preprocessing {
 
     //relative Position des Satzes im Text
-    public double positionInTextRel (List<String> sentence, List<String> text) {
+    public double positionInTextRel (List<String> sentence, List<List<String>> text) {
         return text.indexOf(sentence)/text.size();
     }
 
@@ -14,7 +14,7 @@ public class Preprocessing {
     }
 
     //Prüfung ob erster Satz
-    public double isFirst (String sentence, List<String> text) {
+    public double isFirst (List<String> sentence, List<List<String>> text) {
         if (text.indexOf(sentence) == 0) {
             return 1;
         } else {

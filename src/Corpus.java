@@ -62,11 +62,16 @@ public class Corpus {
         		entry.setUrl(line.get(3));
         		entry.setSummary(line.get(4));
         		entry.setText(line.get(5));
-        		
-        		List<String> wordFreqs = new ArrayList<>();
-        		WordFrequencies wf = new WordFrequencies();
-        		entry.setContentWordsText(wf.getTop10(entry.getText()));
-        		entry.setContentWordsHeadline(wf.getList(entry.getHeadlines()));
+        		entry.setTextList(snlp.stanfordSentenceTokenizer(entry.getText()));
+        		entry.setSummaryList(snlp.stanfordSentenceTokenizer(entry.getSummary()));
+
+				List<String> wordFreqs = new ArrayList<>();
+				WordFrequencies wf = new WordFrequencies();
+				entry.setContentWordsText(wf.getTop10(entry.getText()));
+				entry.setContentWordsHeadline(wf.getList(entry.getHeadlines()));
+
+				List<FeatureVector> featureVectors = createFeatureVectors (entry);
+				entry.setFeatureVectors(featureVectors);
         		
         		
         		entries.add(entry);
@@ -77,4 +82,18 @@ public class Corpus {
         }
 		return entries;
 	}
+
+	private List<FeatureVector> createFeatureVectors(Entry entry) {
+		List<FeatureVector> featureVectors = new ArrayList<>();
+		List<List<String>> sentences = entry.getTextList();
+		for (List<String> sentence : sentences){
+			Preprocessing preprocessing = new Preprocessing();
+			double positionInTextRel = preprocessing.positionInTextRel(sentence, sentences);
+			double countWords = preprocessing.countWords(sentence);
+			double isFirst = preprocessing.isFirst(sentence, sentences);
+		}
+		return featureVectors;
+	}
+
+
 }

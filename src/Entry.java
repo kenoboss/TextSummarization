@@ -26,7 +26,11 @@ public class Entry {
 
 	List<String> contentWordsText;
 	List<String> contentWordsHeadline;
-	
+	List<List<String>> textList;
+	List<List<String>> summaryList;
+	List<FeatureVector> featureVectors;
+
+
 	public int getId() {
 		return id;
 	}
@@ -69,11 +73,29 @@ public class Entry {
 	public void setText(String text) {
 		this.text = text;
 	}
-
 	public List<String> getContentWordsText() { return contentWordsText; }
 	public void setContentWordsText(List<String> contentWordsText) { this.contentWordsText = contentWordsText; }
 	public List<String> getContentWordsHeadline() { return contentWordsHeadline; }
 	public void setContentWordsHeadline(List<String> contentWordsHeadline) { this.contentWordsHeadline = contentWordsHeadline; }
+	public List<FeatureVector> getFeatureVectors() {
+		return featureVectors;
+	}
+	public void setFeatureVectors(List<FeatureVector> featureVectors) {
+		this.featureVectors = featureVectors;
+	}
+	public List<List<String>> getTextList() {
+		return textList;
+	}
+	public void setTextList(List<List<String>> textList) {
+		this.textList = textList;
+	}
+	public List<List<String>> getSummaryList() {
+		return summaryList;
+	}
+	public void setSummaryList(List<List<String>> summaryList) {
+		this.summaryList = summaryList;
+	}
+
 
 
 	
