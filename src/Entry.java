@@ -1,6 +1,5 @@
 import java.util.List;
 
-import edu.stanford.nlp.trees.Tree;
 /**
  * 
  * @author Kenoboss
@@ -26,8 +25,10 @@ public class Entry {
 
 	List<String> contentWordsText;
 	List<String> contentWordsHeadline;
-	List<List<String>> textList;
-	List<List<String>> summaryList;
+	List<List<String>> textTokens;
+	List<List<String>> summaryTokens;
+	List<List<String>> textLemmata;
+	List<List<String>> summaryLemmata;
 	List<FeatureVector> featureVectors;
 
 
@@ -83,17 +84,32 @@ public class Entry {
 	public void setFeatureVectors(List<FeatureVector> featureVectors) {
 		this.featureVectors = featureVectors;
 	}
-	public List<List<String>> getTextList() {
-		return textList;
+	public List<List<String>> getTextTokens() {
+		return textTokens;
 	}
-	public void setTextList(List<List<String>> textList) {
-		this.textList = textList;
+	public void setTextTokens(List<List<String>> textTokens) {
+		this.textTokens = textTokens;
 	}
-	public List<List<String>> getSummaryList() {
-		return summaryList;
+	public List<List<String>> getSummaryTokens() {
+		return summaryTokens;
 	}
-	public void setSummaryList(List<List<String>> summaryList) {
-		this.summaryList = summaryList;
+	public void setSummaryTokens(List<List<String>> summaryTokens) {
+		this.summaryTokens = summaryTokens;
+	}
+	public List<List<String>> getTextLemmata() {
+		return textLemmata;
+	}
+
+	public void setTextLemmata(List<List<String>> textLemmata) {
+		this.textLemmata = textLemmata;
+	}
+
+	public List<List<String>> getSummaryLemmata() {
+		return summaryLemmata;
+	}
+
+	public void setSummaryLemmata(List<List<String>> summaryLemmata) {
+		this.summaryLemmata = summaryLemmata;
 	}
 
 

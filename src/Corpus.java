@@ -1,10 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.sound.sampled.Line;
-
-import edu.stanford.nlp.trees.Tree;
 
 /**
  * 
@@ -62,10 +57,13 @@ public class Corpus {
         		entry.setUrl(line.get(3));
         		entry.setSummary(line.get(4));
         		entry.setText(line.get(5));
-        		entry.setTextList(snlp.stanfordSentenceTokenizer(entry.getText()));
-        		entry.setSummaryList(snlp.stanfordSentenceTokenizer(entry.getSummary()));
+        		List<List<List<String>>> stanfordText = snlp.stanfordLemmatizerAndTokenizer(entry.getText());
+        		entry.setTextTokens(stanfordText.get(0));
+        		entry.setTextLemmata(stanfordText.get(1));
+				List<List<List<String>>> stanfordSummary = snlp.stanfordLemmatizerAndTokenizer(entry.getSummary());
+        		entry.setSummaryTokens(stanfordSummary.get(0));
+        		entry.setSummaryLemmata(stanfordSummary.get(1));
 
-				List<String> wordFreqs = new ArrayList<>();
 				WordFrequencies wf = new WordFrequencies();
 				entry.setContentWordsText(wf.getTop10(entry.getText()));
 				entry.setContentWordsHeadline(wf.getList(entry.getHeadlines()));
@@ -85,14 +83,31 @@ public class Corpus {
 
 	private List<FeatureVector> createFeatureVectors(Entry entry) {
 		List<FeatureVector> featureVectors = new ArrayList<>();
-		List<List<String>> sentences = entry.getTextList();
+		List<List<String>> sentences = entry.getTextTokens();
+		int counter = 0;
 		for (List<String> sentence : sentences){
 			Preprocessing preprocessing = new Preprocessing();
 			double positionInTextRel = preprocessing.positionInTextRel(sentence, sentences);
 			double countWords = preprocessing.countWords(sentence);
 			double isFirst = preprocessing.isFirst(sentence, sentences);
+			double NrContentWordsInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsText());
+			double NrContentWordsHeadlineInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsHeadline());
+			FeatureVector featureVector = new FeatureVector(positionInTextRel, countWords, isFirst, NrContentWordsInSentence, NrContentWordsHeadlineInSentence);
+			featureVectors.add(featureVector);
+			counter++;
 		}
 		return featureVectors;
+	}
+
+	private static double contentWordsPerSentence (List<String> input, List<String> contentWords){
+
+		double result = 0;
+		for (String token : input){
+			if (contentWords.contains(token)){
+				result++;
+			}
+		}
+		return result;
 	}
 
 

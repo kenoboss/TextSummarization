@@ -5,7 +5,9 @@ public class Preprocessing {
 
     //relative Position des Satzes im Text
     public double positionInTextRel (List<String> sentence, List<List<String>> text) {
-        return text.indexOf(sentence)/text.size();
+        //System.out.println(text.indexOf(sentence) + " " +text.size());
+        double tmp = (text.indexOf(sentence) +1)/ (double) text.size();
+        return tmp;
     }
 
     //Anzahl Wörter in Satz
