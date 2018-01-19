@@ -27,13 +27,20 @@ public class WordFrequencies {
         return false;
     }
 
-    public HashMap<String, Integer> createFrequencyList (String inputText){
+    private static List<String> createSimpleLemmaList (List<List<String>> lemmata){
+        List<String> result = new ArrayList<>();
+        for (List<String> entries : lemmata){
+            for (String lemma : entries){
+                result.add(lemma);
+            }
+        }
+        return result;
+    }
+
+    public HashMap<String, Integer> createFrequencyList (List<List<String>> lemmata){
         HashMap<String, Integer> result = new HashMap<>();
-        StanfordNLP sdnlp = new StanfordNLP();
-        List<String> lemmata = sdnlp.stanfordLemmatizer(inputText);
-
-
-        for (String lemma : lemmata){
+        List<String> lemmaList = createSimpleLemmaList(lemmata);
+        for (String lemma : lemmaList){
             if (this.isLemmaInWordList(lemma) == false){
                 if (result.containsKey(lemma)){ result.put(lemma, result.get(lemma) + 1); }
                 else{ result.put(lemma, 1); }
@@ -43,9 +50,9 @@ public class WordFrequencies {
         return result;
     }
 
-    public List<String> getTop10 (String inputText){
+    public List<String> getTop10 (List<List<String>> lemmata){
         List<String> result = new ArrayList<>();
-        HashMap<String, Integer> freqList = this.createFrequencyList(inputText);
+        HashMap<String, Integer> freqList = this.createFrequencyList(lemmata);
         Set set2 = freqList.entrySet();
         Iterator iterator2 = set2.iterator();
         int counter = 0;
@@ -60,9 +67,9 @@ public class WordFrequencies {
     }
 
 
-    public List<String> getList (String inputText){
+    public List<String> getList (List<List<String>> lemmata){
         List<String> result = new ArrayList<>();
-        HashMap<String, Integer> freqList = this.createFrequencyList(inputText);
+        HashMap<String, Integer> freqList = this.createFrequencyList(lemmata);
         Set set2 = freqList.entrySet();
         Iterator iterator2 = set2.iterator();
         while(iterator2.hasNext()) {

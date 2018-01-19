@@ -27,8 +27,10 @@ public class Entry {
 	List<String> contentWordsHeadline;
 	List<List<String>> textTokens;
 	List<List<String>> summaryTokens;
+	List<List<String>> headlineTokens;
 	List<List<String>> textLemmata;
 	List<List<String>> summaryLemmata;
+	List<List<String>> headlineLemmata;
 	List<FeatureVector> featureVectors;
 
 
@@ -99,19 +101,27 @@ public class Entry {
 	public List<List<String>> getTextLemmata() {
 		return textLemmata;
 	}
-
 	public void setTextLemmata(List<List<String>> textLemmata) {
 		this.textLemmata = textLemmata;
 	}
-
 	public List<List<String>> getSummaryLemmata() {
 		return summaryLemmata;
 	}
-
 	public void setSummaryLemmata(List<List<String>> summaryLemmata) {
 		this.summaryLemmata = summaryLemmata;
 	}
-
+	public List<List<String>> getHeadlineTokens() {
+		return headlineTokens;
+	}
+	public void setHeadlineTokens(List<List<String>> headlineTokens) {
+		this.headlineTokens = headlineTokens;
+	}
+	public List<List<String>> getHeadlineLemmata() {
+		return headlineLemmata;
+	}
+	public void setHeadlineLemmata(List<List<String>> headlineLemmata) {
+		this.headlineLemmata = headlineLemmata;
+	}
 
 
 	

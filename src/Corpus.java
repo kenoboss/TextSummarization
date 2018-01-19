@@ -63,17 +63,16 @@ public class Corpus {
 				List<List<List<String>>> stanfordSummary = snlp.stanfordLemmatizerAndTokenizer(entry.getSummary());
         		entry.setSummaryTokens(stanfordSummary.get(0));
         		entry.setSummaryLemmata(stanfordSummary.get(1));
-
+				List<List<List<String>>> stanfordHeadline = snlp.stanfordLemmatizerAndTokenizer(entry.getHeadlines());
+				entry.setHeadlineTokens(stanfordHeadline.get(0));
+				entry.setHeadlineLemmata(stanfordHeadline.get(1));
 				WordFrequencies wf = new WordFrequencies();
-				entry.setContentWordsText(wf.getTop10(entry.getText()));
-				entry.setContentWordsHeadline(wf.getList(entry.getHeadlines()));
-
-				List<FeatureVector> featureVectors = createFeatureVectors (entry);
+				entry.setContentWordsText(wf.getTop10(entry.getTextLemmata()));
+				entry.setContentWordsHeadline(wf.getList(entry.getHeadlineLemmata()));
+				List<FeatureVector> featureVectors = createFeatureVectors(entry);
 				entry.setFeatureVectors(featureVectors);
-        		
-        		
+
         		entries.add(entry);
-        		
         		i++;
         	}
 			lineCounter++;
