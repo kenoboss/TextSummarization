@@ -45,7 +45,7 @@ public class Corpus {
 		int maxSize = 0;
 
 		if (test == false){maxSize = cLines.size()-1;}
-		else{maxSize = 10;}
+		else{maxSize = 100;}
 
         for(List<String> line: cLines) {
         	if (lineCounter > 0 && lineCounter <= maxSize) {
@@ -69,9 +69,13 @@ public class Corpus {
 				WordFrequencies wf = new WordFrequencies();
 				entry.setContentWordsText(wf.getTop10(entry.getTextLemmata()));
 				entry.setContentWordsHeadline(wf.getList(entry.getHeadlineLemmata()));
+
+				LabelSentences labelSentences = new LabelSentences(entry);
+				entry.setDistances(labelSentences.getDistances());
+				entry.setMeanDistance(labelSentences.getMean(entry.getDistances()));
+				entry.setLabels(labelSentences.getLabels(entry.getDistances(), entry.getMeanDistance()));
 				List<FeatureVector> featureVectors = createFeatureVectors(entry);
 				entry.setFeatureVectors(featureVectors);
-
         		entries.add(entry);
         		i++;
         	}

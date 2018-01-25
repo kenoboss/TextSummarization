@@ -32,6 +32,9 @@ public class Entry {
 	List<List<String>> summaryLemmata;
 	List<List<String>> headlineLemmata;
 	List<FeatureVector> featureVectors;
+	List<Double> distances;
+	List<Integer> labels;
+	double meanDistance;
 
 
 	public int getId() {
@@ -121,6 +124,24 @@ public class Entry {
 	}
 	public void setHeadlineLemmata(List<List<String>> headlineLemmata) {
 		this.headlineLemmata = headlineLemmata;
+	}
+	public List<Double> getDistances() {
+		return distances;
+	}
+	public void setDistances(List<Double> distances) {
+		this.distances = distances;
+	}
+	public List<Integer> getLabels() {
+		return labels;
+	}
+	public void setLabels(List<Integer> labels) {
+		this.labels = labels;
+	}
+	public double getMeanDistance() {
+		return meanDistance;
+	}
+	public void setMeanDistance(double meanDistance) {
+		this.meanDistance = meanDistance;
 	}
 
 

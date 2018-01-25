@@ -174,4 +174,21 @@ public class Helper {
 		return result;
 	}
 
+	/**
+	 * This method converts a list of featurevectors into a JavaArray
+	 * @param input
+	 * @return double[][]
+	 */
+	public double [] [] listToArry (List<FeatureVector> input){
+		double [] [] result = new double[input.size()][5];
+		int counter = 0;
+		for (FeatureVector featureVector : input){
+			int index = 0;
+			for (double value : featureVector.getVector()){
+				result[counter][index] = value;
+			}
+		}
+		return result;
+	}
+
 }
