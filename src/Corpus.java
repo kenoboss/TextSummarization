@@ -21,8 +21,8 @@ public class Corpus {
 		this.entries = entries;
 	}
 
-	public Corpus (boolean test) {
-		List<Entry> entries = this.createCorpus(test);
+	public Corpus (int corpusType) {
+		List<Entry> entries = this.createCorpus(corpusType);
 		this.setEntries(entries);
 	}
 
@@ -35,20 +35,33 @@ public class Corpus {
 		return lines;
 	}
 	
-	public List<Entry> createCorpus(boolean test){
+	public List<Entry> createCorpus(int corpusType){
 
 		StanfordNLP snlp = new StanfordNLP();
 		List < List < String > > cLines = readIn();
 		List<Entry> entries = new ArrayList<Entry>();
 		int lineCounter = 0;
 		int i = 0;
-		int maxSize = 0;
 
-		if (test == false){maxSize = cLines.size()-1;}
-		else{maxSize = 100;}
+		// calculates the size of the corpus
+		int maxSize = 0;
+		int minSize = 0;
+		Double tmpSize = 0.0;
+		tmpSize = cLines.size()*0.66;
+		int [] train = {0, tmpSize.intValue()-1};
+		int [] test = {tmpSize.intValue(), cLines.size()-1};
+		if (corpusType == 1){
+			// create trainingscorpus
+			minSize = train[0]; maxSize = train[1];
+		}
+		else{
+			// create testcorpus
+			minSize = test[0]; maxSize = test[1];
+		}
+
 
         for(List<String> line: cLines) {
-        	if (lineCounter > 0 && lineCounter <= maxSize) {
+        	if (lineCounter > minSize && lineCounter <= maxSize) {
         		Entry entry = new Entry();
         		entry.setId(lineCounter);
         		entry.setAuthor(line.get(0));
