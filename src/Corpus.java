@@ -29,7 +29,7 @@ public class Corpus {
 	public static List < List < String > > readIn () {
 		Helper helper = new Helper();
 		String s = System.getProperty("user.dir");
-		String path = s+"/data/summary_news_clear.csv";
+		String path = s+"/src/data/summary_news_clear.csv";
 		List < List < String > > lines = helper.readCSVFile(path);
 		
 		return lines;

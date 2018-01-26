@@ -30,8 +30,8 @@ public class NeuralNetwork {
         int batchSize = 50;
         Helper reader = new Helper();
         String s = System.getProperty("user.dir");
-        final String filenameTrain  = new ClassPathResource("/home/wern/Uni/Master/3._Semester/Projektseminar/TextSummarization/data/temp/trainingsSetSmall.csv").getFile().getPath();
-        final String filenameTest  = new ClassPathResource("/home/wern/Uni/Master/3._Semester/Projektseminar/TextSummarization/data/temp/trainingsSetSmall.csv").getFile().getPath();
+        final String filenameTrain  = new ClassPathResource("/data/temp/trainingsSetSmall.csv").getFile().getPath();
+        final String filenameTest  = new ClassPathResource("/data/temp/testSetSmall.csv").getFile().getPath();
 
         RecordReader rr = new CSVRecordReader();
         //rr.initialize(new FileSplit(new File("src/main/resources/classification/linear_data_train.csv")));
