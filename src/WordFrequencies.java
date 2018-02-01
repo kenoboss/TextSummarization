@@ -7,7 +7,7 @@ public class WordFrequencies {
 
     public List<String> getWordList (){
         Helper h = new Helper();
-        List<String> tmp = h.readSmallFileLines("/data/stopwords-en.txt");
+        List<String> tmp = h.readSmallFileLines("/src/data/stopwords-en.txt");
         List<String> result = new ArrayList<>();
         for (String entry : tmp){
             String ts = clear_entry(entry);

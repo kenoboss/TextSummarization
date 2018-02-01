@@ -44,7 +44,7 @@ public class NeuralNetwork {
 
         // Set up network configuration
         NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
-        builder.iterations(100);
+        builder.iterations(1000);
         builder.learningRate(0.1);
         builder.seed(123);
         builder.useDropConnect(false);
