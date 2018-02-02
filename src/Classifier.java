@@ -7,6 +7,11 @@ import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -27,5 +32,11 @@ public class Classifier {
         Classifier test = new Classifier();
         MultiLayerNetwork restored = test.loadNet("trainedNetwork.zip");
         System.out.println(restored.params());
+
+        String filename = new ClassPathResource("/data/temp/classificationTest.csv").getFile().getPath();
+        DataSet test = readCSVDataset(filename,
+                50, 5, 2);
+
+        restored.feedForward();
     }
 }
