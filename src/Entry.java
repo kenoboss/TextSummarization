@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -163,6 +164,33 @@ public class Entry {
 	public Entry() {
 		
 	}
+
+
+	public Entry (String text, String headline){
+		Helper helper = new Helper();
+		StanfordNLP snlp = new StanfordNLP();
+		this.setText(text);
+		List<List<List<String>>> stanfordText = snlp.stanfordLemmatizerAndTokenizer(this.getText());
+		this.setTextTokens(stanfordText.get(0));
+		this.setTextLemmata(stanfordText.get(1));
+
+		this.setHeadlines(headline);
+		List<List<List<String>>> stanfordHeadline = snlp.stanfordLemmatizerAndTokenizer(this.getHeadlines());
+		this.setHeadlineTokens(stanfordHeadline.get(0));
+		this.setHeadlineLemmata(stanfordHeadline.get(1));
+		WordFrequencies wf = new WordFrequencies();
+		this.setContentWordsText(wf.getTop10(this.getTextLemmata()));
+		this.setContentWordsHeadline(wf.getList(this.getHeadlineLemmata()));
+
+		LabelSentences labelSentences = new LabelSentences(this);
+		this.setDistances(labelSentences.getDistances());
+		this.setMeanDistance(labelSentences.getMean(this.getDistances()));
+		this.setLabels(labelSentences.getLabels(this.getDistances(), this.getMeanDistance()));
+		List<FeatureVector> featureVectors = helper.createFeatureVectors(this);
+		this.setFeatureVectors(featureVectors);
+	}
+
+
 	
 	
 	

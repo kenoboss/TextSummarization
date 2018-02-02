@@ -191,4 +191,34 @@ public class Helper {
 		return result;
 	}
 
+
+	public List<FeatureVector> createFeatureVectors(Entry entry) {
+		List<FeatureVector> featureVectors = new ArrayList<>();
+		List<List<String>> sentences = entry.getTextTokens();
+		int counter = 0;
+		for (List<String> sentence : sentences){
+			Preprocessing preprocessing = new Preprocessing();
+			double positionInTextRel = preprocessing.positionInTextRel(sentence, sentences);
+			double countWords = preprocessing.countWords(sentence);
+			double isFirst = preprocessing.isFirst(sentence, sentences);
+			double NrContentWordsInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsText());
+			double NrContentWordsHeadlineInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsHeadline());
+			FeatureVector featureVector = new FeatureVector(positionInTextRel, countWords, isFirst, NrContentWordsInSentence, NrContentWordsHeadlineInSentence);
+			featureVectors.add(featureVector);
+			counter++;
+		}
+		return featureVectors;
+	}
+
+	public static double contentWordsPerSentence (List<String> input, List<String> contentWords){
+
+		double result = 0;
+		for (String token : input){
+			if (contentWords.contains(token)){
+				result++;
+			}
+		}
+		return result;
+	}
+
 }

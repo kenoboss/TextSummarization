@@ -38,6 +38,7 @@ public class Corpus {
 	public List<Entry> createCorpus(int corpusType, int max){
 
 		StanfordNLP snlp = new StanfordNLP();
+		Helper helper = new Helper();
 		List < List < String > > cLines = readIn();
 		List<Entry> entries = new ArrayList<Entry>();
 		int lineCounter = 0;
@@ -92,7 +93,7 @@ public class Corpus {
 				entry.setDistances(labelSentences.getDistances());
 				entry.setMeanDistance(labelSentences.getMean(entry.getDistances()));
 				entry.setLabels(labelSentences.getLabels(entry.getDistances(), entry.getMeanDistance()));
-				List<FeatureVector> featureVectors = createFeatureVectors(entry);
+				List<FeatureVector> featureVectors = helper.createFeatureVectors(entry);
 				entry.setFeatureVectors(featureVectors);
         		entries.add(entry);
         		i++;
@@ -102,34 +103,6 @@ public class Corpus {
 		return entries;
 	}
 
-	private List<FeatureVector> createFeatureVectors(Entry entry) {
-		List<FeatureVector> featureVectors = new ArrayList<>();
-		List<List<String>> sentences = entry.getTextTokens();
-		int counter = 0;
-		for (List<String> sentence : sentences){
-			Preprocessing preprocessing = new Preprocessing();
-			double positionInTextRel = preprocessing.positionInTextRel(sentence, sentences);
-			double countWords = preprocessing.countWords(sentence);
-			double isFirst = preprocessing.isFirst(sentence, sentences);
-			double NrContentWordsInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsText());
-			double NrContentWordsHeadlineInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsHeadline());
-			FeatureVector featureVector = new FeatureVector(positionInTextRel, countWords, isFirst, NrContentWordsInSentence, NrContentWordsHeadlineInSentence);
-			featureVectors.add(featureVector);
-			counter++;
-		}
-		return featureVectors;
-	}
-
-	private static double contentWordsPerSentence (List<String> input, List<String> contentWords){
-
-		double result = 0;
-		for (String token : input){
-			if (contentWords.contains(token)){
-				result++;
-			}
-		}
-		return result;
-	}
 
 	public void saveCorpus (String path){
 
