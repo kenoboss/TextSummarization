@@ -39,16 +39,12 @@ public class Classifier {
         saveCorpus(pathToFile, entry);
         pathToFile = "/data/temp/test.csv";
         double[][] ratings = createRatings(entry.getFeatureVectors().size(), pathToFile);
-        int counter = 0;
-        for (double [] rating : ratings){
-            if (rating[0] >= 0.5){
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String token : entry.getTextLemmata().get(counter)){
-                    stringBuilder.append(token+" ");
+        for (int i = 0; i < ratings.length; i++){
+            for (int j = 0; j < ratings[i].length; j++){
+                if (ratings[i][j] >= 0.5){
+                    System.out.println(ratings[i][j]);
                 }
-                sb.append(stringBuilder.toString()+" ");
             }
-            counter++;
         }
         return sb.toString();
     }
@@ -70,7 +66,7 @@ public class Classifier {
     }
 
     public static double [][] createRatings (int batchsize, String pathToFeatureVectors) throws IOException, InterruptedException{
-        double [] [] result = new double[batchsize][2];
+        double [][] result = new double[batchsize][2];
         Classifier test = new Classifier();
         MultiLayerNetwork restored = test.loadNet("trainedNetwork.zip");
 
@@ -82,7 +78,6 @@ public class Classifier {
         INDArray output = restored.output(next.getFeatureMatrix());
         for (int i = 0; i < batchsize; i++){
             result[i][0] = output.getDouble(i, 0);
-            System.out.println(result[i][0]);
             result[i][1] = output.getDouble(i, 1);
         }
 
