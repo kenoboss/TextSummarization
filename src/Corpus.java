@@ -21,8 +21,8 @@ public class Corpus {
 		this.entries = entries;
 	}
 
-	public Corpus (int corpusType) {
-		List<Entry> entries = this.createCorpus(corpusType);
+	public Corpus (int corpusType, int max) {
+		List<Entry> entries = this.createCorpus(corpusType, max);
 		this.setEntries(entries);
 	}
 
@@ -35,7 +35,7 @@ public class Corpus {
 		return lines;
 	}
 	
-	public List<Entry> createCorpus(int corpusType){
+	public List<Entry> createCorpus(int corpusType, int max){
 
 		StanfordNLP snlp = new StanfordNLP();
 		List < List < String > > cLines = readIn();
@@ -54,9 +54,14 @@ public class Corpus {
 			// create trainingscorpus
 			minSize = train[0]; maxSize = train[1];
 		}
-		else{
+		else if (corpusType == 0){
 			// create testcorpus
 			minSize = test[0]; maxSize = test[1];
+		}
+		else{
+			// corpusType as corpusSize
+			int corpusSize = corpusType;
+			minSize = max; maxSize = corpusSize+max;
 		}
 
 
@@ -124,6 +129,34 @@ public class Corpus {
 			}
 		}
 		return result;
+	}
+
+	public void saveCorpus (String path){
+
+		List<String> result = new ArrayList<>();
+		for (Entry entry : this.getEntries()){
+			int index = 0;
+			StringBuilder sb = new StringBuilder();
+			for (FeatureVector featureVector : entry.getFeatureVectors()){
+				sb.append(entry.getLabels().get(index)+",");
+				int counter = 0;
+				for (double aDouble : featureVector.getVector()){
+					if (counter < featureVector.getVector().length-1){
+						sb.append(aDouble+",");
+					}
+					else{
+						sb.append(aDouble);
+					}
+					counter++;
+				}
+				sb.append("\n");
+				index++;
+			}
+			result.add(sb.toString().trim());
+		}
+
+		Helper helper = new Helper();
+		helper.writeLargeFileLines(path, result);
 	}
 
 
