@@ -182,10 +182,6 @@ public class Entry {
 		this.setContentWordsText(wf.getTop10(this.getTextLemmata()));
 		this.setContentWordsHeadline(wf.getList(this.getHeadlineLemmata()));
 
-		LabelSentences labelSentences = new LabelSentences(this);
-		this.setDistances(labelSentences.getDistances());
-		this.setMeanDistance(labelSentences.getMean(this.getDistances()));
-		this.setLabels(labelSentences.getLabels(this.getDistances(), this.getMeanDistance()));
 		List<FeatureVector> featureVectors = helper.createFeatureVectors(this);
 		this.setFeatureVectors(featureVectors);
 	}
