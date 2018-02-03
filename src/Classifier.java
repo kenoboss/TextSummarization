@@ -39,10 +39,14 @@ public class Classifier {
         saveCorpus(pathToFile, entry);
         pathToFile = "/data/temp/test.csv";
         double[][] ratings = createRatings(entry.getFeatureVectors().size(), pathToFile);
+        List<List<String>> tokens = entry.getTextTokens();
         for (int i = 0; i < ratings.length; i++){
             for (int j = 0; j < ratings[i].length; j++){
                 if (ratings[i][j] >= 0.5){
-                    System.out.println(ratings[i][j]);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    List<String> tmp = tokens.get(i);
+                    for (String s : tmp){sb.append(s+" ");}
+                    sb.append(stringBuilder.toString()+" ");
                 }
             }
         }
@@ -76,7 +80,7 @@ public class Classifier {
         DataSet next = iterator.next();
 
         INDArray output = restored.output(next.getFeatureMatrix());
-        for (int i = 0; i < batchsize; i++){
+        for (int i = 0; i < output.size(0); i++){
             result[i][0] = output.getDouble(i, 0);
             result[i][1] = output.getDouble(i, 1);
         }
