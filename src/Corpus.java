@@ -130,6 +130,29 @@ public class Corpus {
 
 		Helper helper = new Helper();
 		helper.writeLargeFileLines(path, result);
+
+		List<Boolean> tests = testCorpus(result);
+		for (int i = 0; i < tests.size(); i++){
+			if (tests.get(i) == false){
+				System.out.println("Error in Line: "+i);
+			}
+		}
+	}
+
+
+	private static List<Boolean> testCorpus (List<String> result){
+		List<Boolean> tests = new ArrayList<>();
+		for (String entry : result){
+			String [] tmp = entry.split(",");
+			if (tmp.length == 6 ||tmp[0] == "1" || tmp[0] == "0"){
+				tests.add(true);
+			}
+			else{
+				tests.add(false);
+			}
+		}
+
+		return tests;
 	}
 
 

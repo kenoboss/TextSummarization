@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class NeuralNetwork {
     public static void main(String[] args) throws IOException, InterruptedException {
-        int batchSize = 50;
+        int batchSize = 1000;
         Helper reader = new Helper();
         String s = System.getProperty("user.dir");
         final String filenameTrain  = new ClassPathResource("/data/temp/trainingsSetSmall.csv").getFile().getPath();
@@ -45,8 +45,8 @@ public class NeuralNetwork {
 
         // Set up network configuration
         NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
-        builder.iterations(1000);
-        builder.learningRate(0.1);
+        builder.iterations(5000);
+        builder.learningRate(0.01);
         builder.seed(123);
         builder.useDropConnect(false);
         builder.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
@@ -103,17 +103,20 @@ public class NeuralNetwork {
         // create output for every training sample
         System.out.println("Evaluate model....");
         Evaluation eval = new Evaluation(2);
+        int counter = 0;
         while(testIter.hasNext()){
             DataSet t = testIter.next();
             INDArray features = t.getFeatureMatrix();
             INDArray lables = t.getLabels();
             INDArray predicted = net.output(features,false);
             eval.eval(lables, predicted);
+            System.out.println(counter);
+            counter++;
         }
         //Print the evaluation statistics
         System.out.println(eval.stats());
         //Save the network
-        File saveLocation = new File("trainedNetwork.zip");
+        File saveLocation = new File("data/model/trainedNetwork.zip");
         boolean saveUpdater = true;
         ModelSerializer.writeModel(net,saveLocation,saveUpdater);
     }

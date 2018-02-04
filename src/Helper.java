@@ -199,7 +199,7 @@ public class Helper {
 		for (List<String> sentence : sentences){
 			Preprocessing preprocessing = new Preprocessing();
 			double positionInTextRel = preprocessing.positionInTextRel(sentence, sentences);
-			double countWords = preprocessing.countWords(sentence);
+			double countWords = preprocessing.countWords(sentence, sentences);
 			double isFirst = preprocessing.isFirst(sentence, sentences);
 			double NrContentWordsInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsText());
 			double NrContentWordsHeadlineInSentence = contentWordsPerSentence(entry.getTextLemmata().get(counter), entry.getContentWordsHeadline());

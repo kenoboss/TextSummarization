@@ -11,8 +11,12 @@ public class Preprocessing {
     }
 
     //Anzahl Wörter in Satz
-    public double countWords (List<String> sentence) {
-        return  sentence.size();
+    public double countWords (List<String> sentence, List<List<String>> sentences) {
+        double partOf = 0.0;
+        int sum = 0;
+        for (List<String> sent : sentences){sum += sent.size();}
+        partOf = sentence.size() / (double) sum;
+        return partOf;
     }
 
     //Prüfung ob erster Satz
