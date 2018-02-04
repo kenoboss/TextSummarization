@@ -29,16 +29,13 @@ import java.io.IOException;
 public class NeuralNetwork {
     public static void main(String[] args) throws IOException, InterruptedException {
         int batchSize = 1000;
-        Helper reader = new Helper();
-        String s = System.getProperty("user.dir");
-        final String filenameTrain  = new ClassPathResource("main/resources/temp/trainingsSetSmall.csv").getFile().getPath();
-        final String filenameTest  = new ClassPathResource("main/resources/temp/testSetSmall.csv").getFile().getPath();
+//        final String filenameTrain  = new ClassPathResource("temp/trainingsSetSmall.csv").getFile().getPath();
+//        final String filenameTest  = new ClassPathResource("temp/testSetSmall.csv").getFile().getPath();
 
-//        final String filenameTrain  = new ClassPathResource("main/resources/trainingsSet.csv").getFile().getPath();
-//        final String filenameTest  = new ClassPathResource("main/resources/testSet.csv").getFile().getPath();
+        final String filenameTrain  = new ClassPathResource("trainingsSet.csv").getFile().getPath();
+        final String filenameTest  = new ClassPathResource("testSet.csv").getFile().getPath();
 
         RecordReader rr = new CSVRecordReader();
-        //rr.initialize(new FileSplit(new File("src/main/resources/classification/linear_data_train.csv")));
         rr.initialize(new FileSplit(new File(filenameTrain)));
         DataSetIterator trainIter = new RecordReaderDataSetIterator(rr,batchSize,0,2);
 
@@ -74,6 +71,7 @@ public class NeuralNetwork {
         hiddenLayerBuilder.dist(new UniformDistribution(0, 1));
         // build and set as layer 0
         listBuilder.layer(0, hiddenLayerBuilder.build());
+
         Builder outputLayerBuilder = new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD);
         outputLayerBuilder.nIn(20);
         outputLayerBuilder.nOut(2);
