@@ -83,7 +83,8 @@ public class Helper {
 		try {
 			Files.write(
 					FileSystems.getDefault().getPath(".", name), 
-					content.getBytes(), 
+					content.getBytes(),
+					StandardOpenOption.TRUNCATE_EXISTING,
 					StandardOpenOption.CREATE);
 		}
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
@@ -95,16 +96,19 @@ public class Helper {
 	 * @param name, content
 	 */
 	public static void writeLargeFileLines(String name, List<String> lines) {
-		try ( BufferedWriter nbw = 
+		try ( BufferedWriter nbw =
 				Files.newBufferedWriter(
-						FileSystems.getDefault().getPath(".", name), 
-						Charset.forName("UTF-8"), 
+						FileSystems.getDefault().getPath(".", name),
+						Charset.forName("UTF-8"),
+						StandardOpenOption.TRUNCATE_EXISTING,
 						StandardOpenOption.CREATE)
-				){ 
+
+				){
 			for ( String line : lines ) {
 				nbw.write(line, 0, line.length());
 				nbw.newLine();
 			}
+			nbw.close();
 		}
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 	}

@@ -103,20 +103,17 @@ public class NeuralNetwork {
         // create output for every training sample
         System.out.println("Evaluate model....");
         Evaluation eval = new Evaluation(2);
-        int counter = 0;
         while(testIter.hasNext()){
             DataSet t = testIter.next();
             INDArray features = t.getFeatureMatrix();
             INDArray lables = t.getLabels();
             INDArray predicted = net.output(features,false);
             eval.eval(lables, predicted);
-            System.out.println(counter);
-            counter++;
         }
         //Print the evaluation statistics
         System.out.println(eval.stats());
         //Save the network
-        File saveLocation = new File("data/model/trainedNetwork.zip");
+        File saveLocation = new File("src/data/model/trainedNetwork.zip");
         boolean saveUpdater = true;
         ModelSerializer.writeModel(net,saveLocation,saveUpdater);
     }
