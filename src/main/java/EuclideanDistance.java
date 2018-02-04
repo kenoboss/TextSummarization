@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @author Tobias Ziegelmayer
+ * @version 1.0.0
+ * This class contains functions for calculating the EuclideanDistance for the project TextSummarization
+ */
 public class EuclideanDistance {
 
 

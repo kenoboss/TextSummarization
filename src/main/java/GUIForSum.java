@@ -1,29 +1,37 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
-
+/**
+ * @author Tobias Ziegelmayer
+ * @version 1.0.0
+ * This class contains the gui for the project TextSummarization
+ */
 public class GUIForSum implements ActionListener{
     JTextArea textInput, textOutput;
     JTextField headline;
     JButton start;
-    JLabel title,l2;
+    JLabel title;
 
 
     GUIForSum() {
-        JFrame f= new JFrame("Automatic Text Summarizer");
+        JFrame f= new JFrame("Automatische Textzusammenfassung");
 
-        title=new JLabel("Automatic Text Summarizer");
-        title.setBounds(220,10, 200,30);
-        title.setToolTipText("This program is the result of a project from students of university Trier");
+        title=new JLabel("Automatische Textzusammenfassung");
+        title.setBounds(170,10, 300,30);
 
         headline=new JTextField("Überschrift");
         headline.setBounds(10,50,300,20);
 
         textInput=new JTextArea("Text");
         textInput.setBounds(10,90,300,260);
+        textInput.setWrapStyleWord(true);
+        textInput.setLineWrap(true);
 
         textOutput=new JTextArea("Hier steht gleich ihre Zusammenfassung.");
         textOutput.setBounds(330,50,300,300);
+        textOutput.setEditable(false);
+        textOutput.setWrapStyleWord(true);
+        textOutput.setLineWrap(true);
 
         start =new JButton("Starten");
         start.setBounds(260,400,120,30);

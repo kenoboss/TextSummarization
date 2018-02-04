@@ -27,7 +27,7 @@ import edu.stanford.nlp.util.CoreMap;
 
 /**
  * 
- * @author Kenoboss
+ * @author Tobias Ziegelmayer
  * @version 1.0.0
  * This class contains all functions for the handling with the Stanford NLP Software
  */

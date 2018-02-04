@@ -3,7 +3,7 @@ import java.util.List;
 
 /**
  * 
- * @author Kenoboss
+ * @author Tobias Ziegelmayer
  * @version 1.0.0
  * This class contains corpus function for the project TextSummarization
  *
@@ -21,11 +21,24 @@ public class Corpus {
 		this.entries = entries;
 	}
 
+	/**
+	 * Constructor of a corpus.
+	 * The constructor takes as arguments two integer values.
+	 * The first one is the start point for the method createCorpus
+	 * and the second one is the maximum border for the size of
+	 * the corpus.
+	 * @param corpusType
+	 * @param max
+	 */
 	public Corpus (int corpusType, int max) {
 		List<Entry> entries = this.createCorpus(corpusType, max);
 		this.setEntries(entries);
 	}
 
+	/**
+	 * This method creates a list of list of string from a csv file
+	 * @return List<List<String>>
+	 */
 	public static List < List < String > > readIn () {
 		Helper helper = new Helper();
 		String s = System.getProperty("user.dir");
@@ -130,30 +143,5 @@ public class Corpus {
 
 		Helper helper = new Helper();
 		helper.writeLargeFileLines(path, result);
-
-		List<Boolean> tests = testCorpus(result);
-		for (int i = 0; i < tests.size(); i++){
-			if (tests.get(i) == false){
-				System.out.println("Error in Line: "+i);
-			}
-		}
 	}
-
-
-	private static List<Boolean> testCorpus (List<String> result){
-		List<Boolean> tests = new ArrayList<>();
-		for (String entry : result){
-			String [] tmp = entry.split(",");
-			if (tmp.length == 6 ||tmp[0] == "1" || tmp[0] == "0"){
-				tests.add(true);
-			}
-			else{
-				tests.add(false);
-			}
-		}
-
-		return tests;
-	}
-
-
 }

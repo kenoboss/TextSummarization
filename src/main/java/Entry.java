@@ -1,19 +1,16 @@
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 
- * @author Kenoboss
+ * @author Tobias Ziegelmayer
  * @version 1.0.0
  * This class constructs an entry of a corpus.
  * The entry contains id, author, date, source url,
- * headlines, summary and text.
+ * headlines, summary and text a.s.o.
  * It also use the class StanfordNLP for annotating 
  * the summary and the text.
  *
  */
-
-
 public class Entry {
 	
 	int id;
@@ -146,7 +143,10 @@ public class Entry {
 	}
 
 
-	
+	/**
+	 * This method create a string from some getter method of an entry
+	 * @return String
+	 */
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append(this.getId()+", ");
@@ -160,12 +160,17 @@ public class Entry {
 		
 		return sb.toString();
 	}
-	
-	public Entry() {
-		
-	}
 
+	/**
+	 * Emtpy constructor of an entry
+	 */
+	public Entry() {}
 
+	/**
+	 * Constructor of an entry
+	 * @param text
+	 * @param headline
+	 */
 	public Entry (String text, String headline){
 		Helper helper = new Helper();
 		StanfordNLP snlp = new StanfordNLP();
@@ -185,10 +190,4 @@ public class Entry {
 		List<FeatureVector> featureVectors = helper.createFeatureVectors(this);
 		this.setFeatureVectors(featureVectors);
 	}
-
-
-	
-	
-	
-	
 }

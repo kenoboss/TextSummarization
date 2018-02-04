@@ -1,3 +1,8 @@
+/**
+ * @author Tobias Ziegelmayer
+ * @version 1.0.0
+ * This class contains functions for creating the feature vector for the project TextSummarization
+ */
 public class FeatureVector {
     double sentencePosRel;
     double sentenceLength;

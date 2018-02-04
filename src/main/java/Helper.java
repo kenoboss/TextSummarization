@@ -10,26 +10,13 @@ import java.util.List;
 
 /**
  * 
- * @author Kenoboss
+ * @author Tobias Ziegelmayer
  * @version 1.0.0
- * This class contains helper function for the project TextSummarization
+ * This class contains helper functions for the project TextSummarization
  *
  */
 public class Helper {
-	
-	/** 
-	 * @param name
-	 * @return byte[]
-	 */
-	public static byte[] readSmallFileBytes(String name) {
-		try {
-			Path path = FileSystems.getDefault().getPath(".", name);
-			return Files.readAllBytes(path);
-		}
-		catch ( IOException ioe ) { ioe.printStackTrace(); }
-		return null;
-	}
-	
+
 	/**
 	 * This method reads a filename or filepath and returns a list of strings
 	 * with the content of the file
@@ -45,31 +32,7 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 		return null;
 	}
-	
-	/**
-	 * This method reads a filename or filepath and returns a list of strings
-	 * with the content of the file
-	 * @param name
-	 * @return List<String>
-	 */
-	public static List<String> readLargeFileLines(String name) {
-		try ( BufferedReader nbr = 
-				Files.newBufferedReader(
-						FileSystems.getDefault().getPath(name), 
-						Charset.defaultCharset() )
-				){
-			List<String> lines = new ArrayList<String>();
-			while (true){
-				String line = nbr.readLine();
-				if ( line == null ) return lines;
-				lines.add(line);
-			}
 
-		} 
-		catch ( IOException ioe ) { ioe.printStackTrace(); }
-		return null;  
-	}
-	
 	/**
 	 * This method takes a filename or filepath and string, which has to write
 	 * to the file
@@ -110,23 +73,6 @@ public class Helper {
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
 	}
 
-	public static void writeStringToFile (String name, List<String> input){
-		StringBuilder sb = new StringBuilder();
-		for (String entry : input){
-			sb.append(entry+"\n");
-		}
-
-		BufferedWriter writer = null;
-		try
-		{
-			writer = new BufferedWriter( new FileWriter( name));
-			writer.write( sb.toString());
-			writer.close();
-		}
-		catch ( IOException e) { }
-
-	}
-
 	/**
 	 * This method takes a filename or filepath and a string as separator and 
 	 * an optional String to delete in a line as arguments. The method 
@@ -164,52 +110,14 @@ public class Helper {
 		
 		return result;
 	}
-	
-	/**
-	 * This method clears a string from another given string
-	 * @param input
-	 * @param toDelete
-	 * @return String
-	 */
-	public String clearString (String input, String toDelete) {
-		String result = input.trim();
-		result = result.replace(toDelete, "");
-		
-		return result;
-	}
-	
-	/**
-	 * This method clears a array of strings from a given string
-	 * @param input
-	 * @param toDelete
-	 * @return String []
-	 */
-	public String [] clearArrayString (String [] input, String toDelete) {
-		String [] result = new String [input.length];
-		for (int i = 0; i < result.length; i++) {
-			result[i] = clearString(input[i], toDelete);
-		}
-		return result;
-	}
-
-	/**
-	 * This method converts a list of featurevectors into a JavaArray
-	 * @param input
-	 * @return double[][]
-	 */
-	public double [] [] listToArry (List<FeatureVector> input){
-		double [] [] result = new double[input.size()][5];
-		int counter = 0;
-		for (FeatureVector featureVector : input){
-			int index = 0;
-			for (double value : featureVector.getVector()){
-				result[counter][index] = value;
-			}
-		}
-		return result;
-	}
 
 
+	/**
+	 * This method takes an entry as parameter and creates a list of feature vectors
+	 * for all sentences in the text from the entry
+	 * @param entry
+	 * @return List<FeatureVector>
+	 */
 	public List<FeatureVector> createFeatureVectors(Entry entry) {
 		List<FeatureVector> featureVectors = new ArrayList<>();
 		List<List<String>> sentences = entry.getTextTokens();
@@ -228,8 +136,14 @@ public class Helper {
 		return featureVectors;
 	}
 
+	/**
+	 * This method takes two lists of strings as parameter and counts how many words
+	 * from the input list are in the contentWords list
+	 * @param input
+	 * @param contentWords
+	 * @return double
+	 */
 	public static double contentWordsPerSentence (List<String> input, List<String> contentWords){
-
 		double result = 0;
 		for (String token : input){
 			if (contentWords.contains(token)){
