@@ -9,7 +9,6 @@ import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.DataSet;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,20 +23,23 @@ public class Classifier {
     public String summarize (String text, String headline) throws IOException, InterruptedException {
         StringBuilder sb = new StringBuilder();
         Entry entry = new Entry(text, headline);
-        sb.append(entry.getHeadlines()+"\n\n");
-        List<List<String>> orgText = entry.getTextTokens();
-        for (List<String> sentence : orgText){
-            StringBuilder stringBuilder = new StringBuilder();
-            for (String token : sentence){
-                stringBuilder.append(token+" ");
-            }
-            sb.append(stringBuilder.toString()+"\n");
-        }
-        sb.append("\n\n");
-        String pathToFile = "src/data/temp/"+createPath(headline, "csv");
+//        sb.append(entry.getHeadlines()+"\n\n");
+//        List<List<String>> orgText = entry.getTextTokens();
+//        for (List<String> sentence : orgText){
+//            StringBuilder stringBuilder = new StringBuilder();
+//            for (String token : sentence){
+//                stringBuilder.append(token+" ");
+//            }
+//            sb.append(stringBuilder.toString()+"\n");
+//        }
+//        sb.append("\n\n");
+
+        String pathToFile = "target/classes/data/temp/"+createPath(headline, "csv");
+        saveCorpus(pathToFile, entry);
+        pathToFile = "src/data/temp/"+createPath(headline, "csv");
         saveCorpus(pathToFile, entry);
         pathToFile = "/data/temp/"+createPath(headline,"csv");
-        double[][] ratings = createRatings(entry.getFeatureVectors().size(), pathToFile);
+        double[][] ratings = createRatings(entry.getFeatureVectors().size(), pathToFile, entry);
         List<List<String>> tokens = entry.getTextTokens();
         int sumCounter = 0;
         for (int i = 0; i < ratings.length; i++){
@@ -49,7 +51,7 @@ public class Classifier {
                 sb.append(stringBuilder.toString()+"\n");
             }
         }
-        System.out.println("Länge des Textes: "+tokens.size()+" Sätze\nLänge der Zusammenfassung: "+sumCounter+" Sätze");
+        //System.out.println("Länge des Textes: "+tokens.size()+" Sätze\nLänge der Zusammenfassung: "+sumCounter+" Sätze");
         return sb.toString();
     }
 
@@ -71,7 +73,7 @@ public class Classifier {
         return sb.toString();
     }
 
-    public static double [][] createRatings (int batchsize, String pathToFeatureVectors) throws IOException, InterruptedException{
+    public static double [][] createRatings (int batchsize, String pathToFeatureVectors, Entry entry) throws IOException, InterruptedException{
         // TODO: File pathToFeatureVectors not existing at the first run
         double [][] result = new double[batchsize][2];
         Classifier test = new Classifier();
@@ -115,7 +117,6 @@ public class Classifier {
 
         Helper helper = new Helper();
         helper.writeLargeFileLines(path, result);
-        ;
     }
 
 
@@ -138,9 +139,10 @@ public class Classifier {
 //        }
 
 
+
         Classifier classifier = new Classifier();
-        String headline = "Daman & Diu revokes mandatory Rakshabandhan in offices order";
-        String text = "The Daman and Diu administration on Wednesday withdrew a circular that asked women staff to tie rakhis on male colleagues after the order triggered a backlash from employees and was ripped apart on social media.The union territory?s administration was forced to retreat within 24 hours of issuing the circular that made it compulsory for its staff to celebrate Rakshabandhan at workplace.?It has been decided to celebrate the festival of Rakshabandhan on August 7. In this connection, all offices/ departments shall remain open and celebrate the festival collectively at a suitable time wherein all the lady staff shall tie rakhis to their colleagues,? the order, issued on August 1 by Gurpreet Singh, deputy secretary (personnel), had said.To ensure that no one skipped office, an attendance report was to be sent to the government the next evening.The two notifications ? one mandating the celebration of Rakshabandhan (left) and the other withdrawing the mandate (right) ? were issued by the Daman and Diu administration a day apart. The circular was withdrawn through a one-line order issued late in the evening by the UT?s department of personnel and administrative reforms.?The circular is ridiculous. There are sensitivities involved. How can the government dictate who I should tie rakhi to? We should maintain the professionalism of a workplace? an official told Hindustan Times earlier in the day. She refused to be identified.The notice was issued on Daman and Diu administrator and former Gujarat home minister Praful Kodabhai Patel?s direction, sources said.Rakshabandhan, a celebration of the bond between brothers and sisters, is one of several Hindu festivities and rituals that are no longer confined of private, family affairs but have become tools to push politic al ideologies.In 2014, the year BJP stormed to power at the Centre, Rashtriya Swayamsevak Sangh (RSS) chief Mohan Bhagwat said the festival had ?national significance? and should be celebrated widely ?to protect Hindu culture and live by the values enshrined in it?. The RSS is the ideological parent of the ruling BJP.Last year, women ministers in the Modi government went to the border areas to celebrate the festival with soldiers. A year before, all cabinet ministers were asked to go to their constituencies for the festival.";
+        String headline = "India will fire countless bullets if Pakistan fires one: Rajnath Singh";
+        String text = "Asserting that Kashmir is a part of India and will continue to be so, Union home minister Rajnath Singh on Saturday said Indian forces will fire countless bullets if Pakistan fires one.\n “As our neighbour, we do not want to attack Pakistan first. We want to live in peace and harmony with all our neighbours. But unfortunately Pakistan is trying to tear down Jammu and Kashmir and continues attacks on our forces and territory. “I have ordered our forces that if one bullet comes from that side, not to think of firing countless bullets at them,” Singh said at a poll rally in Barjala in Agartala.\n The home minister is on a two-day tour of Tripura to boost BJP’s campaign for the February 18 polls. Lambasting the Marxist government in Tripura, he said it had failed to bring development to the state despite being in power for more than two decades and accused the Left government of “25 years’ misrule” through “crime against women, unemployment and corruption”. “Like West Bengal was devastated during CPM’s 35 years’ regime, Tripura also witnessed misrule under CPM government for 25 years. So I appeal to the people to give at least once chance to the BJP to allow improvement of the state like other BJP-ruled states,” said Singh.\n Praising the NDA government, he said people will never bring CPM back to power if they see the good governance in BJP-ruled states. Singh will start a Vijay Rath Yatra from Durgabari to BT College ground in the city on Sunday where he will address another public meeting. He will then tour six assembly constituencies as part of his yatra and conclude with another public meeting at Kshudiram Government English School at Jail Ashram Road in Agartala.";
         String sum = classifier.summarize(text, headline);
         String path = createPath(headline, "txt");
 

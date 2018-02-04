@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -111,6 +108,23 @@ public class Helper {
 			nbw.close();
 		}
 		catch ( IOException ioe ) { ioe.printStackTrace(); }
+	}
+
+	public static void writeStringToFile (String name, List<String> input){
+		StringBuilder sb = new StringBuilder();
+		for (String entry : input){
+			sb.append(entry+"\n");
+		}
+
+		BufferedWriter writer = null;
+		try
+		{
+			writer = new BufferedWriter( new FileWriter( name));
+			writer.write( sb.toString());
+			writer.close();
+		}
+		catch ( IOException e) { }
+
 	}
 
 	/**

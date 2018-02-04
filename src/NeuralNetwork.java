@@ -34,6 +34,9 @@ public class NeuralNetwork {
         final String filenameTrain  = new ClassPathResource("/data/temp/trainingsSetSmall.csv").getFile().getPath();
         final String filenameTest  = new ClassPathResource("/data/temp/testSetSmall.csv").getFile().getPath();
 
+//        final String filenameTrain  = new ClassPathResource("/data/trainingsSet.csv").getFile().getPath();
+//        final String filenameTest  = new ClassPathResource("/data/testSet.csv").getFile().getPath();
+
         RecordReader rr = new CSVRecordReader();
         //rr.initialize(new FileSplit(new File("src/main/resources/classification/linear_data_train.csv")));
         rr.initialize(new FileSplit(new File(filenameTrain)));
