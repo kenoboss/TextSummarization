@@ -11,6 +11,7 @@ public class GUIForSum implements ActionListener{
     JTextField headline;
     JButton start;
     JLabel title;
+    JScrollPane scrollPaneInput, scrollPaneOutput;
 
 
     GUIForSum() {
@@ -23,15 +24,19 @@ public class GUIForSum implements ActionListener{
         headline.setBounds(10,50,300,20);
 
         textInput=new JTextArea("Text");
-        textInput.setBounds(10,90,300,260);
         textInput.setWrapStyleWord(true);
         textInput.setLineWrap(true);
+        scrollPaneInput = new JScrollPane(textInput);
+        scrollPaneInput.setBounds(10,90,300,260);
+        scrollPaneInput.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         textOutput=new JTextArea("Hier steht gleich ihre Zusammenfassung.");
-        textOutput.setBounds(330,50,300,300);
         textOutput.setEditable(false);
         textOutput.setWrapStyleWord(true);
         textOutput.setLineWrap(true);
+        scrollPaneOutput = new JScrollPane(textOutput);
+        scrollPaneOutput.setBounds(330,50,300,300);
+        scrollPaneOutput.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         start =new JButton("Starten");
         start.setBounds(260,400,120,30);
@@ -39,8 +44,8 @@ public class GUIForSum implements ActionListener{
 
         f.add(title);
         f.add(headline);
-        f.add(textInput);
-        f.add(textOutput);
+        f.add(scrollPaneInput);
+        f.add(scrollPaneOutput);
         f.add(start);
         f.setSize(640,480);
         f.setLayout(null);
