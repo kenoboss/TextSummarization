@@ -51,14 +51,29 @@ public class FeatureVector {
     double nrThematicWords;
     double nrHeadlineWords;
 
+    /**
+     * This constructor takes five double values as argument and set these values as properties
+     * for a feature vector.
+     * @param sentencePos
+     * @param sentenceLength
+     * @param isFirst
+     * @param nrThematic
+     * @param nrHead
+     */
     public FeatureVector(double sentencePos,double sentenceLength,double isFirst,double nrThematic, double nrHead){
         this.setSentencePosRel(sentencePos);
         this.setSentenceLength(sentenceLength);
         this.setIsFirstsentence(isFirst);
-        this.setNrHeadlineWords(nrHead/sentenceLength);
-        this.setNrThematicWords(nrThematic/sentenceLength);
+        double temp = nrHead / sentenceLength;
+        this.setNrHeadlineWords(temp);
+        temp = nrThematic / sentenceLength;
+        this.setNrThematicWords(temp);
     }
 
+    /**
+     * This method returns an array of double values which represents a feature vector
+     * @return double []
+     */
     public double[] getVector() {
         double []vector = new double[5];
         vector[0] = this.getSentencePosRel();
@@ -69,6 +84,10 @@ public class FeatureVector {
         return vector;
     }
 
+    /**
+     * This method returns a string from a feature vector
+     * @return String
+     */
     public String toString (){
         double [] vector = this.getVector();
         StringBuilder sb = new StringBuilder();

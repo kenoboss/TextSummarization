@@ -39,7 +39,13 @@ public class EuclideanDistance {
     double distance;
 
 
-
+    /**
+     * This constructor takes two hashmaps as parameter. A hashmap represents a frequency list of
+     * content words from a summary. The hashmaps will be maped as a 2-dimensional integer array.
+     * From the array the euclidean distance will be calculated.
+     * @param summary
+     * @param createdSummary
+     */
     public EuclideanDistance(HashMap<String, Integer> summary, HashMap<String, Integer> createdSummary){
         this.setCreatedSummary(createdSummary);
         this.setSummary(summary);
@@ -47,6 +53,13 @@ public class EuclideanDistance {
         this.setDistance(this.distance(inputLists[0], inputLists[1]));
     }
 
+    /**
+     * This method takes two hashmaps as parameter. The method generates a commom list of all
+     * content words.
+     * @param summary
+     * @param createdSummary
+     * @return List<String>
+     */
     private static List<String> getEntrySet (HashMap<String, Integer> summary, HashMap<String, Integer> createdSummary){
         List<String> entrySet = new ArrayList<>();
         for (String lemma : summary.keySet()){
@@ -63,6 +76,15 @@ public class EuclideanDistance {
         return entrySet;
     }
 
+    /**
+     * This method takes two hashmaps as parameter. The method generates for each hashmap
+     * an int array which only contains the frequency of the content words.
+     * The arrays have the same length and the index of each entry represents the same
+     * content word.
+     * @param summary
+     * @param createdSummary
+     * @return int [][]
+     */
     private int [][] createInputLists (HashMap<String, Integer> summary, HashMap<String, Integer> createdSummary){
         List<String> entrySet = getEntrySet(summary, createdSummary);
         int [] [] result = new int[2][entrySet.size()];
@@ -85,6 +107,13 @@ public class EuclideanDistance {
         return result;
     }
 
+    /**
+     * This method takes two integer arrays as parameter and
+     * calculates the euclidean distance between them.
+     * @param a
+     * @param b
+     * @return double
+     */
     private double distance(int[] a, int[] b) {
         double diff_square_sum = 0.0;
         for (int i = 0; i < a.length; i++) {

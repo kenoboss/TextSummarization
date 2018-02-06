@@ -38,7 +38,7 @@ public class Classifier {
         List<List<String>> tokens = entry.getTextTokens();
         int sumCounter = 0;
         for (int i = 0; i < ratings.length; i++){
-            if (ratings[i][0] >= 0.5){
+            if (ratings[i][0] >= 0.6){
                 sumCounter++;
                 StringBuilder stringBuilder = new StringBuilder();
                 List<String> tmp = tokens.get(i);

@@ -47,7 +47,18 @@ public class Corpus {
 		
 		return lines;
 	}
-	
+
+	/**
+	 * This method takes as arguments two integer values.
+	 * The first one is the start point for the method createCorpus
+	 * and the second one is the maximum border for the size of
+	 * the corpus.
+	 * The method generates a list of entries and add all information
+	 * from a text to an entry.
+	 * @param corpusType
+	 * @param max
+	 * @return List<Entry>
+	 */
 	public List<Entry> createCorpus(int corpusType, int max){
 
 		StanfordNLP snlp = new StanfordNLP();
@@ -56,7 +67,6 @@ public class Corpus {
 		List<Entry> entries = new ArrayList<Entry>();
 		int lineCounter = 0;
 		int i = 0;
-
 		// calculates the size of the corpus
 		int maxSize = 0;
 		int minSize = 0;
@@ -117,6 +127,11 @@ public class Corpus {
 	}
 
 
+	/**
+	 * This method takes a path to a folder and a filename
+	 * to save the created feature vectors of a corpus as csv file
+	 * @param path
+	 */
 	public void saveCorpus (String path){
 
 		List<String> result = new ArrayList<>();

@@ -23,6 +23,7 @@ public class LabelSentences {
         this.setEntry(entry);
     }
 
+
     public List<Double> getDistances (){
         Entry entry = this.getEntry();
         List<Double> result = new ArrayList<>();

@@ -14,6 +14,12 @@ public class GUIForSum implements ActionListener{
     JScrollPane scrollPaneInput, scrollPaneOutput;
 
 
+    /**
+     * This constructor creates a jFrame as main gui window.
+     * There are two textareas, one for the input text and the other one
+     * for the created summary. There is also a textfield for the headline
+     * of the input text.
+     */
     GUIForSum() {
         JFrame f= new JFrame("Automatische Textzusammenfassung");
 
@@ -52,7 +58,12 @@ public class GUIForSum implements ActionListener{
         f.setVisible(true);
     }
 
-
+    /**
+     * This method takes an actionevent as argument.
+     * The method starts the processing of the input fields
+     * and starts the creation of the summary.
+     * @param e
+     */
     public void actionPerformed(ActionEvent e){
         String head=headline.getText();
         String text=textInput.getText();
