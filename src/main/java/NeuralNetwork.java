@@ -24,7 +24,11 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * @author Simon Werner
+ * @version 1.0.0
+ * This class contains a main method that creates, trains, evaluates and saves a neural network with the given parameters
+ */
 
 public class NeuralNetwork {
     public static void main(String[] args) throws IOException, InterruptedException {

@@ -13,7 +13,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Tobias Ziegelmayer & Simon Werner
+ * @version 1.0.0
+ * This class contains functions for Classification of Sentences, based on the trained Neural Network
+ */
 public class Classifier {
 
 

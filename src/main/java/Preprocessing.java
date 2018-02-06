@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Simon Werner
+ * @version 1.0.0
+ * This class contains functions for extracting features from Sentences
+ */
 public class Preprocessing {
 
     //relative Position des Satzes im Text
     public double positionInTextRel (List<String> sentence, List<List<String>> text) {
-        //System.out.println(text.indexOf(sentence) + " " +text.size());
         double tmp = (text.indexOf(sentence) +1)/ (double) text.size();
         return tmp;
     }
