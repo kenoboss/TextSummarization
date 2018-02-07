@@ -7,6 +7,28 @@ Anwendungen des Deeplearning in Java. Darüber hinaus wurden an externen Quellen
 Platform Kaggle (www.kaggle.com) bezogenes Korpus verwendet. Da die Zusammenfassungen im verwendeten Korpus manuell erstellt sind, wurde
 ein Distanzmaß zur späteren Evaluierung der erstellten Zusammenfassungen verwendet, um die Ergebnisse vergleichbar zu machen.
 
+### Anwendung
+Zur Verwendung des Projektes wird zur Zeit die IDE Intellij IDEA (getestet mit 2017.3.3) benötigt. Zusätzlich wird Java 8 von Oracle benötigt sowie Maven (getestet mit 3.3.9).
+Das Programm __Textsummarization__ kann über GitHub heruntergeladen werden (`git clone https://github.com/kenoboss/TextSummarization`). Momentan ist das Projekt nicht öffentlich zugänglich, 
+daher bitten wir Sie ein Issue zu erstellen mit einem kurzen formlosen Schreiben zum Hinzufügen zu dem Projekt. 
+Die Bibliotheken von DL4J und Stanford sollten automatisch heruntergeladen werden, sobald das Projekt in Intellij als Maven Projekt importiert wurde. Falls dies nicht der Fall sein sollte, 
+ziehen Sie die Intellij Dokumentation (https://www.jetbrains.com/help/idea/maven-importing.html) hinzu.
+
+Zum Starten der grafischen Oberfläche starten Sie die Klasse `GUIForSum` in Intellij. 
+
+Um ein neues Neuronales Netz zu trainieren müssen aus einem Textkorpus Featurevectoren erzeugt werden. Zum Erzeugen dieser Featurevectoren starten Sie die Klasse `CreateCorpus`. 
+Das Die Texte in dem Korpus müssen momentan in der englischen Sprache vorliegen und folgendes CSV-Format besitzen:
+`author;date;headlines;url;summary;text;` 
+Die einzelnen Spalten werden mit `;` getrennt. Die Korpusdatei muss als `corpus.csv`benannt sein und sich in folgendem Verzeichnis befinden `/TextSummarization/src/main/resources`. 
+Um nun das eigentliche Training starten zu können, starten die die Datei `NeuralNetwork`. Das Training dauert bei einer Korpusgröße von ca. 4500 Texten ca. 5 Minuten auf einem Computer mit folgenden Spezifikationen:
+- CPU: Intel i7 - 3470S
+- RAM: 8 GB DDR3
+
+Bei dem Training wird das Modell des ursprünglichen Neuronalen Netzes überspielt. Fall Sie als das ursprüngliche wieder verwenden möchten, können Sie dieses jederzeit aus dem GitHub-Repository 
+herunterladen. 
+
+  
+
 ### 1) Ansatz (Khosrow Kaikhah. Text Summarization Using Neural Networks):
 Zur Abstraktion und Evaluation der einzelnen Sätze eines Textes wurde auf Grundlage des oben genannten Artikels ein Set aus Features ausgewählt,
 die den jeweiligen Satz repräsentieren.

@@ -20,11 +20,26 @@ import java.util.List;
  */
 public class Classifier {
 
-
+    /**
+     * This method takes as parameter a string and creates a MultiLayerNetwork from a stored network.
+     * @param pathToNet
+     * @return MultiLayerNetwork
+     * @throws IOException
+     */
     public MultiLayerNetwork loadNet (String pathToNet) throws IOException {
         return ModelSerializer.restoreMultiLayerNetwork(pathToNet);
     }
 
+    /**
+     * This method takes as parameter two string and creates a string as summary from
+     * the input strings.
+     * The output will generated from a trained neural network.
+     * @param text
+     * @param headline
+     * @return String
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public String summarize (String text, String headline) throws IOException, InterruptedException {
         StringBuilder sb = new StringBuilder();
         Entry entry = new Entry(text, headline);
@@ -42,7 +57,7 @@ public class Classifier {
         List<List<String>> tokens = entry.getTextTokens();
         int sumCounter = 0;
         for (int i = 0; i < ratings.length; i++){
-            if (ratings[i][0] >= 0.6){
+            if (ratings[i][0] >= 0.5){
                 sumCounter++;
                 StringBuilder stringBuilder = new StringBuilder();
                 List<String> tmp = tokens.get(i);
@@ -53,6 +68,13 @@ public class Classifier {
         return sb.toString();
     }
 
+    /**
+     * This method takes two strings as parameter and creates from the input
+     * strings a filepath.
+     * @param headline
+     * @param type
+     * @return String
+     */
     private static String createPath (String headline, String type){
         headline = headline.replaceAll("[^A-Za-z0-9]", " ");
         headline = headline.replaceAll(" +", " ");
@@ -71,6 +93,18 @@ public class Classifier {
         return sb.toString();
     }
 
+    /**
+     * This method takes as parameter an integer, a string and an entry and creates a
+     * 2-dimensional array of double values.
+     * The double values are the result of the output layer of the use of the trained neuroal
+     * network.
+     * @param batchsize
+     * @param pathToFeatureVectors
+     * @param entry
+     * @return double [][]
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static double [][] createRatings (int batchsize, String pathToFeatureVectors, Entry entry) throws IOException, InterruptedException{
         double [][] result = new double[batchsize][2];
         Classifier test = new Classifier();
@@ -92,6 +126,11 @@ public class Classifier {
         return result;
     }
 
+    /**
+     * This method takes a path to a folder and a filename
+     * to save the created feature vectors of a corpus as csv file
+     * @param path
+     */
     public void saveCorpus (String path, Entry entry){
 
         List<String> result = new ArrayList<>();
