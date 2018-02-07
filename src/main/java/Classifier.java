@@ -65,6 +65,7 @@ public class Classifier {
                 sb.append(stringBuilder.toString()+"\n");
             }
         }
+        System.out.println("all sentences:\t"+tokens.size()+"\tsentences in the summary:\t"+sumCounter);
         return sb.toString();
     }
 

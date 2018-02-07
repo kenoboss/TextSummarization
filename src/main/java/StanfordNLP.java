@@ -38,36 +38,41 @@ public class StanfordNLP {
 	}
 
 	
-	public List<Tree> stanfordPipeLine (String inputText) {
-		
-		List<Tree> result = new ArrayList<Tree>();
-		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
-	    Properties props = new Properties();
-	    props.put("annotators", "tokenize, ssplit, parse");
-	    StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+//	public List<Tree> stanfordPipeLine (String inputText) {
+//
+//		List<Tree> result = new ArrayList<Tree>();
+//		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution
+//	    Properties props = new Properties();
+//	    props.put("annotators", "tokenize, ssplit, parse");
+//	    StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+//
+//	    String text = inputText;
+//
+//	    // create an empty Annotation just with the given text
+//	    Annotation document = new Annotation(text);
+//
+//	    // run all Annotators on this text
+//	    pipeline.annotate(document);
+//
+//	    // these are all the sentences in this document
+//	    // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+//	    List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+//
+//	    for(CoreMap sentence: sentences) {
+//	      // this is the parsetree of the current sentence
+//	      Tree tree = sentence.get(TreeAnnotation.class);
+//	      result.add(tree);
+//	    }
+//	    return result;
+//	}
 
-	    String text = inputText;
 
-	    // create an empty Annotation just with the given text
-	    Annotation document = new Annotation(text);
-
-	    // run all Annotators on this text
-	    pipeline.annotate(document);
-
-	    // these are all the sentences in this document
-	    // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
-	    List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-
-	    for(CoreMap sentence: sentences) {
-	      // this is the parsetree of the current sentence
-	      Tree tree = sentence.get(TreeAnnotation.class);
-	      result.add(tree);
-	    }
-	    return result;
-	}
-
-
-
+	/**
+	 * This method takes as parameter a string and creates a list of strings.
+	 * The method generates a list of all lemmata from the input string.
+	 * @param inputText
+	 * @return
+	 */
 	public List<String> stanfordLemmatizer (String inputText){
 		List<String> result = new ArrayList<>();
 		Properties props = new Properties();
@@ -86,25 +91,31 @@ public class StanfordNLP {
 	}
 
 
-	public List<List<String>> stanfordSentenceTokenizer (String inputText){
-		List<List<String>> result = new ArrayList<>();
-		Properties props = new Properties();
-		props.put("annotators", "tokenize, ssplit, pos, lemma");
-		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-		Annotation document = new Annotation(inputText);
-		pipeline.annotate(document);
-		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
-		for(CoreMap sentence: sentences) {
-			List<String> sentenceList = new ArrayList<>();
-			for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
-				String word = token.get(TextAnnotation.class);
-				sentenceList.add(word);
-			}
-			result.add(sentenceList);
-		}
-		return result;
-	}
+//	public List<List<String>> stanfordSentenceTokenizer (String inputText){
+//		List<List<String>> result = new ArrayList<>();
+//		Properties props = new Properties();
+//		props.put("annotators", "tokenize, ssplit, pos, lemma");
+//		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+//		Annotation document = new Annotation(inputText);
+//		pipeline.annotate(document);
+//		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+//		for(CoreMap sentence: sentences) {
+//			List<String> sentenceList = new ArrayList<>();
+//			for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
+//				String word = token.get(TextAnnotation.class);
+//				sentenceList.add(word);
+//			}
+//			result.add(sentenceList);
+//		}
+//		return result;
+//	}
 
+	/**
+	 * This method takes as parameter a string and creates a list of lists of lists of strings.
+	 * The method generates lists with all tokens and all lemmata of the input string.
+	 * @param inputText
+	 * @return List<List<List<String>>>
+	 */
 	public List<List<List<String>>> stanfordLemmatizerAndTokenizer (String inputText){
 		List<List<List<String>>> result = new ArrayList<>();
 		Properties props = new Properties();
@@ -133,10 +144,10 @@ public class StanfordNLP {
 	}
 
 
-	public static void main (String [] args) {
-		StanfordNLP nlp = new StanfordNLP();
-		List<String> parse = nlp.stanfordLemmatizer("This is a nice test and another test. I guess i don't like pizza.");
-
-	}
+//	public static void main (String [] args) {
+//		StanfordNLP nlp = new StanfordNLP();
+//		List<String> parse = nlp.stanfordLemmatizer("This is a nice test and another test. I guess i don't like pizza.");
+//
+//	}
 }
 

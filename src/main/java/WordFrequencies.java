@@ -7,9 +7,16 @@ import java.util.*;
  */
 public class WordFrequencies {
 
-
+    /**
+     * This constructor creates an empty instance of WordFrequencies
+     */
     public WordFrequencies(){}
 
+
+    /**
+     * This method creates a list of string with stop words from a txt file
+     * @return List<String>
+     */
     public List<String> getWordList (){
         Helper h = new Helper();
         List<String> tmp = h.readSmallFileLines("src/main/resources/stopwords-en.txt");
@@ -21,17 +28,33 @@ public class WordFrequencies {
         return result;
     }
 
-
+    /**
+     * This method takes a string as parameter and creates a trimed string
+     * @param entry
+     * @return String
+     */
     public static String clear_entry (String entry){
         return entry.trim();
     }
 
+    /**
+     * This method takes a string as parameter and creates a boolean value.
+     * The method tests if the input string is in the stop word list
+     * @param lemma
+     * @return boolean
+     */
     public boolean isLemmaInWordList (String lemma){
         List<String> wordList = this.getWordList();
         if (wordList.contains(lemma)){return true;}
         return false;
     }
 
+    /**
+     * This method takes as parameter a list of list of string and creates a
+     * list of string as output
+     * @param lemmata
+     * @return List<String>
+     */
     private static List<String> createSimpleLemmaList (List<List<String>> lemmata){
         List<String> result = new ArrayList<>();
         for (List<String> entries : lemmata){
@@ -42,6 +65,13 @@ public class WordFrequencies {
         return result;
     }
 
+    /**
+     * This method takes as parameter a list of list of string and creates a hash map of
+     * strings and integer values. The method generates as frequency list of all strings
+     * from the input list
+     * @param lemmata
+     * @return HashMap<String, Integer>
+     */
     public HashMap<String, Integer> createFrequencyList (List<List<String>> lemmata){
         HashMap<String, Integer> result = new HashMap<>();
         List<String> lemmaList = createSimpleLemmaList(lemmata);
@@ -55,6 +85,13 @@ public class WordFrequencies {
         return result;
     }
 
+    /**
+     * This method takes as parameter a list of list of string and creates a list
+     * of string. The method generates a top 10 list of the most frequency words from
+     * the input list
+     * @param lemmata
+     * @return
+     */
     public List<String> getTop10 (List<List<String>> lemmata){
         List<String> result = new ArrayList<>();
         HashMap<String, Integer> freqList = this.createFrequencyList(lemmata);
@@ -71,7 +108,12 @@ public class WordFrequencies {
         return result;
     }
 
-
+    /**
+     * This method takes as parameter a list of list of string and creates a list
+     * of string.
+     * @param lemmata
+     * @return List<String>
+     */
     public List<String> getList (List<List<String>> lemmata){
         List<String> result = new ArrayList<>();
         HashMap<String, Integer> freqList = this.createFrequencyList(lemmata);
@@ -87,6 +129,11 @@ public class WordFrequencies {
     }
 
 
+    /**
+     * This method takes as parameter a hashmap and creates a orderd hashmap by values
+     * @param map
+     * @return HashMap
+     */
     private static HashMap sortByValues(HashMap map) {
         List list = new ArrayList(map.entrySet());
         Collections.sort(list, new Comparator() {
