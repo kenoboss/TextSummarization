@@ -83,15 +83,15 @@ und die Zusammenfassung anzeigen zu lassen.
 - GUIForSum.java
 
 ### Ergebnisse des Trainings
-Examples labeled as 0 classified by model as 0: 8790 times  
-Examples labeled as 0 classified by model as 1: 364 times  
-Examples labeled as 1 classified by model as 0: 8615 times  
-Examples labeled as 1 classified by model as 1: 1932 times  
+`Examples labeled as 0 classified by model as 0: 8790 times`  
+`Examples labeled as 0 classified by model as 1: 364 times`  
+`Examples labeled as 1 classified by model as 0: 8615 times`  
+`Examples labeled as 1 classified by model as 1: 1932 times`  
   
 
-==========================Scores========================================  
- # of classes:    2  
- Accuracy:        0,5442  
- Precision:       0,6732  
- Recall:          0,5717  
- F1 Score:        0,6183  
+__==========================Scores========================================__  
+ __Number of classes:    2__  
+ `Accuracy:        0,5442`  
+ `Precision:       0,6732`  
+ `Recall:          0,5717`  
+ `F1 Score:        0,6183`  
