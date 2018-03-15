@@ -37,7 +37,7 @@ public class NeuralNetwork {
     private static final int NUMFEATUREVECTORSIZE = 5;
     private static final int NUMHIDDENNODES = 10;
     private static final int NUMFINALCLASSES = 2;
-    private static final String HOME_PATH = "/home/ziegelmayer/textsummarisation/";
+    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/";
 
     static HashMap<String, List<Double>> results = new HashMap<>();
 
