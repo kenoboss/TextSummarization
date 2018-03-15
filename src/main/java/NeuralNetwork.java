@@ -63,8 +63,12 @@ public class NeuralNetwork {
 //        }
 
 
+        long startTime = System.currentTimeMillis();
         runNetwork("IDENTITY", WeightInit.XAVIER_FAN_IN);
+        long estimatedTime = System.currentTimeMillis() - startTime;
+        System.out.println("===================\n"+estimatedTime+"\n=================");
         writeResultsToFile(results);
+
     }
 
     private static void writeResultsToFile (HashMap<String, List<Double>> input){
