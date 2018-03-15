@@ -38,6 +38,7 @@ public class NeuralNetwork {
     private static final int NUMFEATUREVECTORSIZE = 5;
     private static final int NUMHIDDENNODES = 10;
     private static final int NUMFINALCLASSES = 2;
+    private static final int ITERATIONS = 10000;
 //    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
     private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
@@ -58,6 +59,7 @@ public class NeuralNetwork {
 //                long startTime = System.currentTimeMillis();
 //                runNetwork(activation, weightInit);
 //                long estimatedTime = System.currentTimeMillis() - startTime;
+//                double minTime = (estimatedTime / 1000 ) / 60;
 //                System.out.println("===================\n"+estimatedTime+"\n=================");
 //            }
 //        }
@@ -66,7 +68,8 @@ public class NeuralNetwork {
         long startTime = System.currentTimeMillis();
         runNetwork("IDENTITY", WeightInit.XAVIER_FAN_IN);
         long estimatedTime = System.currentTimeMillis() - startTime;
-        System.out.println("===================\n"+estimatedTime+"\n=================");
+        double minTime = (estimatedTime / 1000 ) / 60;
+        System.out.println("===================\n"+minTime+"\n=================");
         writeResultsToFile(results);
 
     }
@@ -104,7 +107,7 @@ public class NeuralNetwork {
 
         net.init();
         // add an listener which outputs the error every 100 parameter updates
-        net.setListeners(new ScoreIterationListener(100));
+        net.setListeners(new ScoreIterationListener(ITERATIONS / 10));
         // C&P from GravesLSTMCharModellingExample
         // Print the number of parameters in the network (and for each layer)
         Layer[] layers = net.getLayers();
@@ -145,7 +148,7 @@ public class NeuralNetwork {
     private static MultiLayerConfiguration getFeedForewardConf (String activation, WeightInit weightInit){
         MultiLayerConfiguration configuration = new NeuralNetConfiguration.Builder()
                 .seed(123)
-                .iterations(10000)
+                .iterations(ITERATIONS)
                 .activation(Activation.fromString(activation))
                 .weightInit(weightInit)
                 .learningRate(0.001)
