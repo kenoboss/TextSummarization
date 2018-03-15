@@ -40,14 +40,17 @@ public class Helper {
 	 * @param content
 	 */
 	public static void writeFileBytes(String name, String content) {
+		Writer writer = null;
+
 		try {
-			Files.write(
-					FileSystems.getDefault().getPath(".", name), 
-					content.getBytes(),
-					StandardOpenOption.TRUNCATE_EXISTING,
-					StandardOpenOption.CREATE);
+			writer = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(name), "utf-8"));
+			writer.write(content);
+		} catch (IOException ex) {
+			// Report
+		} finally {
+			try {writer.close();} catch (Exception ex) {/*ignore*/}
 		}
-		catch ( IOException ioe ) { ioe.printStackTrace(); }
 	}
 	
 	/**

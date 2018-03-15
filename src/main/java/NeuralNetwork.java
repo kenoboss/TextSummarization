@@ -24,6 +24,7 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class NeuralNetwork {
     private static final int NUMFEATUREVECTORSIZE = 5;
     private static final int NUMHIDDENNODES = 10;
     private static final int NUMFINALCLASSES = 2;
-    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/";
+//    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
+    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
     static HashMap<String, List<Double>> results = new HashMap<>();
 
@@ -123,6 +125,13 @@ public class NeuralNetwork {
         }
         //Print the evaluation statistics
         System.out.println(eval.stats());
+        if (eval.f1() > 0.0){
+            List<Double> temp = new ArrayList<>();
+            temp.add(eval.f1());
+            temp.add(eval.precision());
+            temp.add(eval.recall());
+            results.put(activation+"  "+weightInit.name(), temp);
+        }
         //Save the network
         File saveLocation = new File(HOME_PATH+"trainedNetwork.zip");
         boolean saveUpdater = true;
