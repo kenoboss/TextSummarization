@@ -2,6 +2,7 @@ import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
 import org.datavec.api.util.ClassPathResource;
+import org.deeplearning4j.api.storage.StatsStorage;
 import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.eval.Evaluation;
 import org.deeplearning4j.nn.api.Layer;
@@ -16,6 +17,9 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer.Builder;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
+import org.deeplearning4j.ui.api.UIServer;
+import org.deeplearning4j.ui.stats.StatsListener;
+import org.deeplearning4j.ui.storage.InMemoryStatsStorage;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -54,22 +58,22 @@ public class NeuralNetwork {
                 "RATIONALTANH", "RELU", "RRELU", "SIGMOID", "SOFTMAX", "SOFTPLUS", "SOFTSIGN",
                 "TANH", "RECTIFIEDTANH", "SELU"};
 
-//        for (String activation : activations){
-//            for (WeightInit weightInit : weightInits){
-//                long startTime = System.currentTimeMillis();
-//                runNetwork(activation, weightInit);
-//                long estimatedTime = System.currentTimeMillis() - startTime;
-//                double minTime = (estimatedTime / 1000 ) / 60;
-//                System.out.println("===================\n"+estimatedTime+"\n=================");
-//            }
-//        }
+        for (String activation : activations){
+            for (WeightInit weightInit : weightInits){
+                long startTime = System.currentTimeMillis();
+                runNetwork(activation, weightInit);
+                long estimatedTime = System.currentTimeMillis() - startTime;
+                double minTime = (estimatedTime / 1000 ) / 60;
+                System.out.println("===================\n"+estimatedTime+"\n=================");
+            }
+        }
 
 
-        long startTime = System.currentTimeMillis();
-        runNetwork("IDENTITY", WeightInit.XAVIER_FAN_IN);
-        long estimatedTime = System.currentTimeMillis() - startTime;
-        double minTime = (estimatedTime / 1000 ) / 60;
-        System.out.println("===================\n"+minTime+"\n=================");
+//        long startTime = System.currentTimeMillis();
+//        runNetwork("IDENTITY", WeightInit.XAVIER_FAN_IN);
+//        long estimatedTime = System.currentTimeMillis() - startTime;
+//        double minTime = (estimatedTime / 1000 ) / 60;
+//        System.out.println("===================\n"+minTime+"\n=================");
         writeResultsToFile(results);
 
     }
@@ -118,6 +122,11 @@ public class NeuralNetwork {
             totalNumParams += nParams;
         }
         System.out.println("Total number of network parameters: " + totalNumParams);
+
+        // start UI
+        // use: http://localhost:9000/train
+//        startUI(net);
+
         // here the actual learning takes place
         net.fit(trainIter);
         // create output for every training sample
@@ -143,6 +152,14 @@ public class NeuralNetwork {
         File saveLocation = new File(HOME_PATH+"trainedNetwork.zip");
         boolean saveUpdater = true;
         ModelSerializer.writeModel(net,saveLocation,saveUpdater);
+    }
+
+    private static void startUI (MultiLayerNetwork net){
+        UIServer uiServer = UIServer.getInstance();
+        StatsStorage statsStorage = new InMemoryStatsStorage();
+        int listenerFrequency = 1;
+        net.setListeners(new StatsListener(statsStorage, listenerFrequency));
+        uiServer.attach(statsStorage);
     }
 
     private static MultiLayerConfiguration getFeedForewardConf (String activation, WeightInit weightInit){
