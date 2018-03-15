@@ -203,7 +203,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>GUIForSum</mainClass>
+                            <mainClass>NeuralNetwork</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
