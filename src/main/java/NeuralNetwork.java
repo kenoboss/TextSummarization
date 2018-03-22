@@ -46,6 +46,7 @@ public class NeuralNetwork {
 //    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
     private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
+
     static HashMap<String, List<Double>> results = new HashMap<>();
 
 
