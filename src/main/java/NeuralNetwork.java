@@ -42,7 +42,7 @@ public class NeuralNetwork {
     private static final int NUMFEATUREVECTORSIZE = 5;
     private static final int NUMHIDDENNODES = 10;
     private static final int NUMFINALCLASSES = 2;
-    private static final int ITERATIONS = 10000;
+    private static final int ITERATIONS = 1000;
 //    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
     private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
@@ -141,6 +141,8 @@ public class NeuralNetwork {
         }
         //Print the evaluation statistics
         System.out.println(eval.stats());
+        Helper helper = new Helper();
+        helper.writeFileBytes(HOME_PATH+"model/stats/"+weightInit.name()+"_"+activation+".txt", eval.stats());
         if (eval.f1() > 0.0){
             List<Double> temp = new ArrayList<>();
             temp.add(eval.f1());
