@@ -95,3 +95,7 @@ __==========================Scores========================================__
  `Precision:       0,6732`  
  `Recall:          0,5717`  
  `F1 Score:        0,6183`  
+ 
+### Training auf dem Server
+sudo -i 
+java -jar textsummarisation-1.0.jar > model/stats/log.txt

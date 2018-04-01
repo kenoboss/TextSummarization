@@ -47,8 +47,8 @@ public class NeuralNetwork {
     private static final int NUMFINALCLASSES = 2;
     private static final int HIDDEN_LAYER_CONT = 10;
     private static final int ITERATIONS = 10000;
-    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
-//    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
+//    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
+    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
 
     static HashMap<String, List<Double>> results = new HashMap<>();
