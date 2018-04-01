@@ -10,10 +10,13 @@ import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration;
 import org.deeplearning4j.nn.conf.NeuralNetConfiguration.ListBuilder;
+import org.deeplearning4j.nn.conf.Updater;
 import org.deeplearning4j.nn.conf.distribution.UniformDistribution;
 import org.deeplearning4j.nn.conf.layers.DenseLayer;
+import org.deeplearning4j.nn.conf.layers.GravesLSTM;
 import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.conf.layers.OutputLayer.Builder;
+import org.deeplearning4j.nn.conf.layers.RnnOutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
@@ -42,9 +45,10 @@ public class NeuralNetwork {
     private static final int NUMFEATUREVECTORSIZE = 5;
     private static final int NUMHIDDENNODES = 10;
     private static final int NUMFINALCLASSES = 2;
+    private static final int HIDDEN_LAYER_CONT = 10;
     private static final int ITERATIONS = 10000;
-//    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
-    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
+    private static final String HOME_PATH = "/home/kenobi/Repos/GitHub/TextSummarization/target/";
+//    private static final String HOME_PATH = "/home/ziegelmayer/TextSummarization/target/";
 
 
     static HashMap<String, List<Double>> results = new HashMap<>();
@@ -108,7 +112,8 @@ public class NeuralNetwork {
         RecordReader rrTest = new CSVRecordReader();
         rrTest.initialize(new FileSplit(new File(filenameTest)));
         DataSetIterator testIter = new RecordReaderDataSetIterator(rrTest,batchSize,0,NUMFINALCLASSES);
-        MultiLayerNetwork net = new MultiLayerNetwork(getFeedForewardConf(activation, weightInit));
+//        MultiLayerNetwork net = new MultiLayerNetwork(getFeedForewardConf(activation, weightInit));
+        MultiLayerNetwork net = new MultiLayerNetwork(getRecurrentConf(activation, weightInit));
 
         net.init();
         // add an listener which outputs the error every 100 parameter updates
@@ -143,7 +148,7 @@ public class NeuralNetwork {
         //Print the evaluation statistics
         System.out.println(eval.stats());
         Helper helper = new Helper();
-        helper.writeFileBytes(HOME_PATH+"model/stats/"+weightInit.name()+"_"+activation+".txt", eval.stats());
+        helper.writeFileBytes(HOME_PATH+"model/stats/"+weightInit.name()+"_"+activation+"_RNN.txt", eval.stats());
         if (eval.f1() > 0.0){
             List<Double> temp = new ArrayList<>();
             temp.add(eval.f1());
@@ -193,5 +198,48 @@ public class NeuralNetwork {
                 .build();
 
         return configuration;
+    }
+
+    private static MultiLayerConfiguration getRecurrentConf (String activation, WeightInit weightInit){
+        NeuralNetConfiguration.Builder builder = new NeuralNetConfiguration.Builder();
+        builder.iterations(1000);
+        builder.learningRate(0.01);
+        builder.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT);
+        builder.seed(123);
+        builder.biasInit(0);
+        builder.miniBatch(false);
+        builder.updater(Updater.RMSPROP);
+        builder.weightInit(weightInit);
+
+        ListBuilder listBuilder = builder.list();
+
+        // first difference, for rnns we need to use GravesLSTM.Builder
+        for (int i = 0; i < HIDDEN_LAYER_CONT; i++) {
+            GravesLSTM.Builder hiddenLayerBuilder = new GravesLSTM.Builder();
+            hiddenLayerBuilder.nIn(i == 0 ? NUMFEATUREVECTORSIZE : NUMHIDDENNODES);
+            hiddenLayerBuilder.nOut(NUMHIDDENNODES);
+            // adopted activation function from GravesLSTMCharModellingExample
+            // seems to work well with RNNs
+            hiddenLayerBuilder.activation(Activation.fromString(activation));
+            listBuilder.layer(i, hiddenLayerBuilder.build());
+        }
+
+        // we need to use RnnOutputLayer for our RNN
+        RnnOutputLayer.Builder outputLayerBuilder = new RnnOutputLayer.Builder(LossFunctions.LossFunction.MCXENT);
+        // softmax normalizes the output neurons, the sum of all outputs is 1
+        // this is required for our sampleFromDistribution-function
+        outputLayerBuilder.activation(Activation.SOFTMAX);
+        outputLayerBuilder.nIn(NUMHIDDENNODES);
+        outputLayerBuilder.nOut(NUMFINALCLASSES);
+        listBuilder.layer(HIDDEN_LAYER_CONT, outputLayerBuilder.build());
+
+        // finish builder
+        listBuilder.pretrain(false);
+        listBuilder.backprop(true);
+
+        // create network
+        MultiLayerConfiguration conf = listBuilder.build();
+
+        return conf;
     }
 }
