@@ -83,18 +83,18 @@ und die Zusammenfassung anzeigen zu lassen.
 - GUIForSum.java
 
 ### Ergebnisse des Trainings
-`Examples labeled as 0 classified by model as 0: 8790 times`  
-`Examples labeled as 0 classified by model as 1: 364 times`  
-`Examples labeled as 1 classified by model as 0: 8615 times`  
-`Examples labeled as 1 classified by model as 1: 1932 times`  
+`Examples labeled as 0 classified by model as 0: 6417 times`  
+`Examples labeled as 0 classified by model as 1: 2737 times`  
+`Examples labeled as 1 classified by model as 0: 3429 times`  
+`Examples labeled as 1 classified by model as 1: 7118 times`  
   
 
 __==========================Scores========================================__  
  __Number of classes:    2__  
- `Accuracy:        0,5442`  
- `Precision:       0,6732`  
- `Recall:          0,5717`  
- `F1 Score:        0,6183`  
+ `Accuracy:        0,6870`  
+ `Precision:       0,6870`  
+ `Recall:          0,6879`  
+ `F1 Score:        0,6978`  
  
 ### Training auf dem Server
 sudo -i 
