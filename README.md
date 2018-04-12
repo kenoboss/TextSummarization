@@ -99,5 +99,5 @@ __==========================Scores========================================__
  `F1 Score:        0,6978`  
  
 ### Training auf dem Server
-sudo -i 
-java -jar textsummarisation-1.0.jar > model/stats/log.txt
+`> sudo -i`
+`> java -jar textsummarisation-1.0.jar > model/stats/log.txt`
