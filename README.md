@@ -65,11 +65,13 @@ werden die in 1) beschriebenen Feature Vektoren für die jeweiligen Sätze erste
 
 ### 3) Neuronales Netz:
 Mit den extrahierten Featurevektoren und den Satzlabels wird nun ein Neuronales Netz trainiert (Input-, Hidden- und Outputlayer).
-Die Anzahl der Neuronen in den Schichten beträgt 5 (=Anzahl Features), 20 und 2(=Anzahl Labels). Das Korpus wurde hierfür in ein Trainings-
+Die Anzahl der Neuronen in den Schichten beträgt 5 (=Anzahl Features), 10 und 2(=Anzahl Labels). Das Korpus wurde hierfür in ein Trainings-
 und ein Testset aufgeteilt, die jeweils gelabelt sind. Auf Grundlage der Sets werden im Trainings- und Evaluationsprozess die Gewichte eingestellt,
 die für die spätere Klassifikation verwendet werden. Das trainierte Netz wird gespeichert und kann nun verwendet werden. Neue Texte, die 
 zusammengefasst werden sollen, werden dafür zunächst wieder wie in 2) beschrieben verarbeitet und mit Informationen angereichert. Der Output
 des neuronalen Netzes bestimmt schließlich, ob der aktuelle Satz wichtig genug für die Zusammenfassung ist.
+
+Das Neuronale Netz wurde als Rekurrentes neuronales Netz mit einer Hardsigmoid-Funktion als Aktivierungsfunktion und mit XAVIER_FAN_IN als Initialgewicht für die Kanten zwischen den Neuronen konfiguriert.
 
 #### Relevante Klassen:
 - NeuralNetwork.java (Erzeugung, Training und Speichern des Netzes)
