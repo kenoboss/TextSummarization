@@ -100,4 +100,5 @@ __==========================Scores========================================__
  
 ### Training auf dem Server
 `> sudo -i`
+
 `> java -jar textsummarisation-1.0.jar > model/stats/log.txt`
